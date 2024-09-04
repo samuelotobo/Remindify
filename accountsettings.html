@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings │ Remindify</title>
+    <link rel="shortcut icon" type="x-icon" href="logo.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+    rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="logo.png" alt="Remindify Logo">
+                    <h2><span class="primary">Remind</span><span class="danger">Ify</span></h2>
+                </div>
+                <div class="close" id="close-btn">        
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="dashboard.php" >
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="AllReminders.html">
+                    <span class="material-icons-sharp">today</span>
+                    <h3>All Reminders</h3>
+                    <!-- <span class="today-count">3</span> -->
+                </a>
+                <a href="calendar.html">
+                    <span class="material-icons-sharp">calendar_month</span>
+                    <h3>Calendar</h3>
+                </a>
+                <a href="balance.html">
+                    <span class="material-icons-sharp">savings</span>
+                    <h3>Balance</h3>
+                </a>
+                <a href="completed.html">
+                    <span class="material-icons-sharp">assignment_turned_in</span>
+                    <h3>Completed</h3>
+                </a>
+                <a href="recyclebin.html">
+                    <span class="material-icons-sharp" class="active">delete</span>
+                    <h3>Recycle Bin</h3>
+                </a>
+                <!-- <a href="settings.html">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a> -->
+                <a href="#" class="active">
+                    <span class="material-icons-sharp">account_circle</span>
+                    <h3>Account Settings</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-- ----------------end of aside ;))))) ---------------- -->
+
+        <main>
+            <h1>Account Settings</h1>
+
+            <div class="date">
+                <input type="date">
+            </div>
+
+            <div class="settings-form">
+                <form action="#" method="post">
+                    <div class="input-group">
+                        <label for="username">Change Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter new username">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">Change Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter new email">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Change Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter new password">
+                    </div>
+
+                    <button type="submit" class="primary">Save Changes</button>
+                </form>
+            </div>
+        </main>
+        <!-- ============================ END OF MAIN===================== -->
+
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>

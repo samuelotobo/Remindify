@@ -1,0 +1,133 @@
+:root {
+    --color-primary: #7c4dff;
+    --color-danger: #ff4d4d;
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-white: #fff;
+    --color-light: #f8f8f8;
+    --color-dark: #363636;
+    --color-muted: #8a8d91;
+    --color-background: #f4f4f9;
+    --border-radius: 5px;
+    --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --padding: 1rem;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f4f4f9, #e6e6ea);
+    animation: backgroundAnimation 10s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    0% { background-color: #f4f4f9; }
+    100% { background-color: #e6e6ea; }
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: var(--padding);
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-box {
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: var(--padding);
+    font-size: 2rem;
+    color: var(--color-danger);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--padding);
+    background-color: var(--color-light);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 5px rgba(124, 77, 255, 0.5);
+}
+
+.input-group span {
+    margin-right: var(--padding);
+    color: var(--color-muted);
+}
+
+.input-group input {
+    width: 100%;
+    border: none;
+    background: none;
+    padding: var(--padding);
+    font-size: 1rem;
+}
+
+button {
+    width: 100%;
+    padding: var(--padding);
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #5a33d1;
+    transform: scale(1.05);
+}
+
+p {
+    text-align: center;
+    margin-top: var(--padding);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #5a33d1;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}

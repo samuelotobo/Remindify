@@ -1,0 +1,102 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar │ Remindify</title>
+    <link rel="shortcut icon" type="x-icon" href="logo.png">
+    <link rel="stylesheet" href="calendar.css">
+    <script src="calendar.js" defer></script>
+  </head>
+  <body>
+        <!-- =============== calendar ================ -->
+        <div class="contianer">
+          <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="logo.png" alt="Remindify Logo">
+                    <h2><span class="primary">Remind</span><span class="danger">Ify</span></h2>
+                </div>
+                <div class="close" id="close-btn">        
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="index.html">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="AllReminders.html">
+                    <span class="material-icons-sharp">today</span>
+                    <h3>All Reminders</h3>
+                    <!-- <span class="today-count">3</span> -->
+                </a>
+                <a href="#"class="active">
+                    <span class="material-icons-sharp">calendar_month</span>
+                    <h3>Calendar</h3>
+                </a>
+                <a href="balance.html">
+                    <span class="material-icons-sharp">savings</span>
+                    <h3>Balance</h3>
+                </a>
+                <a href="completed.html">
+                    <span class="material-icons-sharp">assignment_turned_in</span>
+                    <h3>Completed</h3>
+                </a>
+                <a href="recyclebin.html">
+                    <span class="material-icons-sharp">delete</span>
+                    <h3>Recycle Bin</h3>
+                </a>
+                <!-- <a href="settings.html">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a> -->
+                <a href="accountsettings.html">
+                    <span class="material-icons-sharp">account_circle</span>
+                    <h3>Account Settings</h3>
+                </a>
+            </div>
+        </aside>
+          <div class="calendar">
+            <div class="calendar-header">
+              <span class="month-picker" id="month-picker"> May </span>
+              <div class="year-picker" id="year-picker">
+                <span class="year-change" id="pre-year">
+                  <pre><</pre>
+                </span>
+                <span id="year">2020 </span>
+                <span class="year-change" id="next-year">
+                  <pre>></pre>
+                </span>
+              </div>
+            </div>
+     
+            <div class="calendar-body">
+              <div class="calendar-week-days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+              </div>
+              <div class="calendar-days">
+              </div>
+            </div>
+            <div class="calendar-footer">
+            </div>
+            <div class="date-time-formate">
+              <div class="day-text-formate">TODAY</div>
+              <div class="date-time-value">
+                <div class="time-formate">02:51:20</div>
+                <div class="date-formate">23 - july - 2022</div>
+              </div>
+            </div>
+            <div class="month-list"></div>
+          </div>
+        </div>
+    
+  </body>
+</html>

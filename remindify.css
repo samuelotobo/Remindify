@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --color-primary: #7380ec;
+    --color-danger: #ff7782;
+    --color-background: #f6f6f9;
+    --color-dark: #363949;
+    --border-radius-3: 1.2rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-dark);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.download-container{
+    display: flex;
+    justify-content: center;
+}
+header {
+    /* width: 100%;
+    display: flex; */
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 1rem 2rem; */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+}
+
+.download-container {
+    display: flex;
+    align-items: center;
+}
+
+.download-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: var(--border-radius-3);
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+main {
+    text-align: center;
+}
+
+.welcome-message {
+    margin-bottom: 2rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.primary-btn {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: var(--border-radius-3);
+    cursor: pointer;
+}
+
+.danger-btn {
+    background-color: var(--color-danger);
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: var(--border-radius-3);
+    cursor: pointer;
+}
+
+/* animations */
+/* Fade in animation for logo and welcome message */
+.logo-container,
+.welcome-message {
+    opacity: 0;
+}
+
+/* Bounce animation for the download button */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.bounce {
+    animation: bounce 1s;
+}
+
+/* Hover effects for buttons */
+.primary-btn:hover,
+.danger-btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
