@@ -343,6 +343,32 @@ $('#editForm').on('submit', function(e) {
         }
     });
 });
+$(document).on('click', '.delete-reminder', function(e) {
+    e.preventDefault();
+    const reminderId = $(this).data('id');
+
+    if (confirm('Are you sure you want to delete this reminder?')) {
+        $.ajax({
+            url: 'delete_reminder.php',
+            type: 'POST',  // Change from 'GET' to 'POST'
+            data: { id: reminderId },  // Pass reminderId in the POST body
+            success: function(response) {
+                if (response.trim() === 'Success') {
+                    alert('Reminder deleted successfully!');
+                    location.reload();  // Reload the page to reflect changes
+                } else {
+                    alert('Failed to delete reminder.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting reminder:', error);
+                alert('Error deleting reminder.');
+            }
+        });
+    }
+});
+
+
 
 $('.close').on('click', function() {
     $('#editForm')[0].reset(); // Reset the form

@@ -123,8 +123,14 @@ if (!isset($_SESSION['email'])) {
             <section class="reminder-section">
                 <h2 class="slogan">Reminders for all, anytime, anywhere!</h2>
                 <p class="subline">Never forget a thing with Our app by your side!</p>
-                <button class="group-btn">Make a group</button>
-                
+                <div class="create-group">
+    <form id="create-group-form">
+        <input type="text" id="group-name" placeholder="Enter group name" required>
+        <button type="submit" id="create-group-btn">Create Group</button>
+    </form>
+</div>
+
+
                 <div class="join-group">
                     <input type="text" placeholder="Enter a code or link" class="input-code">
                     <button class="join-btn">Join</button>
@@ -309,28 +315,42 @@ if (!isset($_SESSION['email'])) {
     });
 
 
-    document.getElementById('reminder-form').addEventListener('submit', (event) => {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
 
-    const description = document.getElementById('description').value;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    const location = document.getElementById('location').value;
 
-    // Show popup notification
-    const popup = document.getElementById('popup');
-    const popupMessage = document.getElementById('popup-message');
-    popupMessage.textContent = `Reminder Added: ${description} on ${date} at ${time} in ${location}`;
-    popup.classList.add('show');
-
-    // Hide the popup after 6 seconds
-    setTimeout(() => {
-        popup.classList.remove('show');
-    }, 6000);
 
     // Optionally, you can also submit the form data to the server here if needed
-    // For example, using fetch() or XMLHttpRequest to send data to the server
+    // For example, using fetch() or XMLHttpRequest to send 
+    
+    document.getElementById('create-group-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+
+    const groupName = document.getElementById('group-name').value;
+
+    if (groupName.trim() === '') {
+        alert('Group name cannot be empty');
+        return;
+    }
+
+    // Send group name to PHP using AJAX
+    fetch('create_group.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ group_name: groupName })
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data === 'success') {
+            alert('Group created successfully!');
+            location.reload(); // Refresh page after successful group creation
+        } else {
+            alert('Error creating group: ' + data);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 });
+
 
 </script>
 </body>

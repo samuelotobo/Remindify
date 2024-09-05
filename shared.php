@@ -222,6 +222,81 @@ if (!isset($_SESSION['email'])) {
             <small class="text-muted">Last 24 hours</small>
         </div>
 
+
+
+        <div class="container">
+        <h1>Shared Groups</h1>
+        <div class="groups-list">
+            <?php
+            // Fetch all groups
+            $sql = "SELECT * FROM groups";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $group_id = htmlspecialchars($row['group_id']);
+                    $group_name = htmlspecialchars($row['group_name']);
+                    echo "<div class='group-item' data-group-id='$group_id'>
+                            <h2>$group_name</h2>
+                            <button class='add-reminder-btn'>Add Reminder</button>
+                            <button class='view-participants-btn'>View Participants</button>
+                            <button class='edit-group-btn'>Edit Group</button>
+                            <button class='delete-group-btn'>Delete Group</button>
+                          </div>";
+                }
+            } else {
+                echo "<p>No groups available.</p>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-container">
+        <!-- Add Reminder Modal -->
+        <div id="add-reminder-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Add Reminder</h2>
+                <form id="add-reminder-form">
+                    <input type="hidden" id="add-group-id">
+                    <label for="reminder-description">Description:</label>
+                    <textarea id="reminder-description" required></textarea>
+                    <label for="reminder-date">Date:</label>
+                    <input type="date" id="reminder-date" required>
+                    <label for="reminder-time">Time:</label>
+                    <input type="time" id="reminder-time" required>
+                    <button type="submit">Add Reminder</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- View Participants Modal -->
+        <div id="view-participants-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Participants</h2>
+                <ul id="participants-list">
+                    <!-- Participants will be dynamically loaded here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Edit Group Modal -->
+        <div id="edit-group-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Edit Group</h2>
+                <form id="edit-group-form">
+                    <input type="hidden" id="edit-group-id">
+                    <label for="edit-group-name">Group Name:</label>
+                    <input type="text" id="edit-group-name" required>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
         </main>
 
 <!-- Modal Container -->
@@ -303,6 +378,223 @@ if (!isset($_SESSION['email'])) {
         }
     });
 });
+
+
+        // Handling modals and form submissions
+        document.addEventListener('DOMContentLoaded', () => {
+            const modals = document.querySelectorAll('.modal');
+            const closeModal = (modal) => modal.style.display = 'none';
+            const openModal = (modal) => modal.style.display = 'block';
+
+            // Handle add reminder button click
+            document.querySelectorAll('.add-reminder-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const groupId = this.closest('.group-item').dataset.groupId;
+                    document.getElementById('add-group-id').value = groupId;
+                    openModal(document.getElementById('add-reminder-modal'));
+                });
+            });
+
+            // Handle view participants button click
+            document.querySelectorAll('.view-participants-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const groupId = this.closest('.group-item').dataset.groupId;
+                    fetchParticipants(groupId);
+                    openModal(document.getElementById('view-participants-modal'));
+                });
+            });
+
+            // Handle edit group button click
+            document.querySelectorAll('.edit-group-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const groupId = this.closest('.group-item').dataset.groupId;
+                    document.getElementById('edit-group-id').value = groupId;
+                    openModal(document.getElementById('edit-group-modal'));
+                });
+            });
+
+            // Handle delete group button click
+            document.querySelectorAll('.delete-group-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const groupId = this.closest('.group-item').dataset.groupId;
+                    if (confirm('Are you sure you want to delete this group?')) {
+                        deleteGroup(groupId);
+                    }
+                });
+            });
+
+            // Fetch participants
+            function fetchParticipants(groupId) {
+                fetch(`fetch_participants.php?group_id=${groupId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const participantsList = document.getElementById('participants-list');
+                        participantsList.innerHTML = '';
+                        data.forEach(participant => {
+                            const li = document.createElement('li');
+                            li.textContent = participant.username;
+                            participantsList.appendChild(li);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching participants:', error));
+            }
+
+            // Add reminder
+            document.getElementById('add-reminder-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const groupId = document.getElementById('add-group-id').value;
+                const description = document.getElementById('reminder-description').value;
+                const date = document.getElementById('reminder-date').value;
+                const time = document.getElementById('reminder-time').value;
+
+                fetch('add_group_reminder.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        group_id: groupId,
+                        description: description,
+                        date: date,
+                        time: time,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Reminder added successfully!');
+                        closeModal(document.getElementById('add-reminder-modal'));
+                        sendDesktopNotification(groupId, description); // Notify participants
+                    } else {
+                        alert('Error adding reminder: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            // Edit group
+            document.getElementById('edit-group-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const groupId = document.getElementById('edit-group-id').value;
+                const groupName = document.getElementById('edit-group-name').value;
+
+                fetch('edit_group.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        group_id: groupId,
+                        group_name: groupName,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Group updated successfully!');
+                        location.reload(); // Reload the page to reflect changes
+                    } else {
+                        alert('Error updating group: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            // Delete group
+            function deleteGroup(groupId) {
+                fetch('delete_group.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        group_id: groupId,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Group deleted successfully!');
+                        location.reload(); // Reload the page to reflect changes
+                    } else {
+                        alert('Error deleting group: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            // Close modals
+            document.querySelectorAll('.close').forEach(span => {
+                span.addEventListener('click', () => closeModal(span.closest('.modal')));
+            });
+
+            // Desktop notification for group participants
+            function sendDesktopNotification(groupId, description) {
+                fetch('notify_participants.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        group_id: groupId,
+                        description: description,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('Error sending notifications: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+
+        document.querySelectorAll('.view-participants-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const groupId = this.getAttribute('data-group-id');
+
+        // Fetch participants via AJAX
+        fetch('fetch_participants.php', {
+            method: 'POST',
+            body: new URLSearchParams({group_id: groupId})
+        })
+        .then(response => response.json())
+        .then(data => {
+            let participantList = '';
+            data.forEach(participant => {
+                participantList += `<li><span class="icon">✔</span><span>${participant}</span></li>`;
+            });
+            document.getElementById('participants-list').innerHTML = participantList;
+            document.getElementById('notification-modal').style.display = 'block';
+        });
+    });
+});
+
+
+if (isset($_POST['delete_group_id'])) {
+    $groupId = $_POST['delete_group_id'];
+    $deleteQuery = "DELETE FROM groups WHERE id = '$groupId'";
+    if ($conn->query($deleteQuery)) {
+        echo "Group deleted successfully";
+    } else {
+        echo "Error deleting group: " . $conn->error;
+    }
+}
+
+$participantEmails = []; // Fetch all participant emails for the group
+foreach ($participantEmails as $email) {
+    mail($email, "New Reminder", "A new reminder has been added to your group!", "From: noreply@remindify.com");
+}
+
+document.querySelectorAll('.add-reminder-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const groupId = this.getAttribute('data-group-id');
+        document.getElementById('notification-modal').style.display = 'block';
+        document.getElementById('notification-title').innerText = 'Add Reminder to Group ' + groupId;
+    });
+});
+
     </script>
 </body>
 </html>
