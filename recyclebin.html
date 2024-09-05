@@ -1,49 +1,143 @@
-<?php include 'auth.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register │ Remindify</title>
+    <title>Recycle Bin │ Remindify</title>
     <link rel="shortcut icon" type="x-icon" href="logo.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+    rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="form-container">
-        <div class="form-box">
-            <h1>Register</h1>
-            <form action="register_handler.php" method="POST" id="register-form" enctype="multipart/form-data">
-                <div class="input-group">
-                    <span class="material-icons-sharp">person</span>
-                    <input type="text" name="firstname" placeholder="First Name" required>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="deadline_17515932.png" alt="Remindify Logo">
+                    <h2><span class="primary">Remind</span><span class="danger">Ify</span></h2>
                 </div>
-                <div class="input-group">
-                    <span class="material-icons-sharp">person</span>
-                    <input type="text" name="lastname" placeholder="Last Name" required>
+                <div class="close" id="close-btn">        
+                    <span class="material-icons-sharp">close</span>
                 </div>
-                <div class="input-group">
-                    <span class="material-icons-sharp">person</span>
-                    <input type="text" name="fullname" placeholder="Full Name" required>
+            </div>
+
+            <div class="sidebar">
+                <a href="dashboard.php" >
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="AllReminders.html">
+                    <span class="material-icons-sharp">today</span>
+                    <h3>All Reminders</h3>
+                    <!-- <span class="today-count">3</span> -->
+                </a>
+                <a href="calendar.html">
+                    <span class="material-icons-sharp">calendar_month</span>
+                    <h3>Calendar</h3>
+                </a>
+                <a href="balance.html">
+                    <span class="material-icons-sharp">savings</span>
+                    <h3>Balance</h3>
+                </a>
+                <a href="completed.html">
+                    <span class="material-icons-sharp">assignment_turned_in</span>
+                    <h3>Completed</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-icons-sharp" class="active">delete</span>
+                    <h3>Recycle Bin</h3>
+                </a>
+                <!-- <a href="settings.html">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a> -->
+                <a href="accountsettings.html">
+                    <span class="material-icons-sharp">account_circle</span>
+                    <h3>Account Settings</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-- ----------------end of aside ;))))) ---------------- -->
+
+        <main>
+            <h1>Recycle Bin</h1>
+
+            <div class="date">
+                <input type="date">
+            </div>
+            <h1>Recycle Bin</h1>
+
+            <div class="recycle-bin">
+                <div class="recycle-bin-options">
+                    <button class="restore-btn">Restore Selected</button>
+                    <button class="delete-btn">Delete Selected</button>
+                    <button class="empty-bin-btn">Empty Bin</button>
                 </div>
-                <div class="input-group">
-                    <span class="material-icons-sharp">email</span>
-                    <input type="email" name="email" placeholder="Email" required>
+                <div class="recycle-bin-items">
+                    <!-- Example of a deleted reminder -->
+                    <div class="recycle-item">
+                        <input type="checkbox" class="item-checkbox">
+                        <span class="item-name">Deleted Reminder 1</span>
+                        <span class="item-date">Deleted on: 2024-08-19</span>
+                    </div>
+                    <div class="recycle-item">
+                        <input type="checkbox" class="item-checkbox">
+                        <span class="item-name">Deleted Reminder 2</span>
+                        <span class="item-date">Deleted on: 2024-08-18</span>
+                    </div>
+                    <!-- Additional items -->
                 </div>
-                <div class="input-group">
-                    <span class="material-icons-sharp">lock</span>
-                    <input type="password" name="password" placeholder="Password" required>
+            </div>
+        
+            <!-- Modal for confirmation prompt -->
+            <div id="confirmation-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <p>Are you sure you want to permanently delete the selected items?</p>
+                    <button class="confirm-delete">Yes, Delete</button>
+                    <button class="cancel-delete">Cancel</button>
                 </div>
-                <div class="input-group">
-                    <span class="material-icons-sharp">image</span>
-                    <input type="file" name="profileimage" accept="image/*" required>
+            </div>
+        
+            <!-- Settings for auto empty -->
+            <div class="auto-empty-settings">
+                <h2>Auto Empty Recycle Bin</h2>
+                <form id="auto-empty-form">
+                    <label for="empty-period">Auto Empty After:</label>
+                    <select id="empty-period" name="empty-period">
+                        <option value="7">1 Week</option>
+                        <option value="30">1 Month</option>
+                        <option value="90">3 Months</option>
+                    </select>
+                    <button type="submit">Save Settings</button>
+                </form>
+            </div>
+        </main>
+        <!-- ============================ END OF MAIN===================== -->
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
                 </div>
-                <button type="submit">Register</button>
-                <p>Already have an account? <a href="login.php">Login</a></p>
-            </form>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>Sophie</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="tulip_3255497.png" alt="Admin Photo">
+                    </div>
+                </div>
+            </div>
+                <!-- === end of top === -->
         </div>
     </div>
-    <script src="./script.js"></script>
+    <script src="./index.js"></script>
 </body>
 </html>
