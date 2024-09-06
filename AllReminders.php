@@ -128,8 +128,133 @@ if ($result->num_rows > 0) {
     </style>
 </head>
 <body>
-    <!-- Your existing HTML code -->
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="logo.png" alt="Remindify Logo">
+                    <h2><span class="primary">Remind</span><span class="danger">Ify</span></h2>
+                </div>
+                <div class="close" id="close-btn">        
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
 
+            <div class="sidebar">
+                <a href="dashboard.php">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-icons-sharp">today</span>
+                    <h3>All Reminders</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-icons-sharp">schedule_send</span>
+                    <h3>Shared Calendar</h3>
+                </a>
+                <a href="calendar.php">
+                    <span class="material-icons-sharp">calendar_month</span>
+                    <h3>Calendar</h3>
+                </a>
+                <a href="balance.php">
+                    <span class="material-icons-sharp">savings</span>
+                    <h3>My Wallet</h3>
+                </a>
+                <a href="completed.php">
+                    <span class="material-icons-sharp">assignment_turned_in</span>
+                    <h3>Completed</h3>
+                </a>
+                <a href="recyclebin.php">
+                    <span class="material-icons-sharp">delete</span>
+                    <h3>Recycle Bin</h3>
+                </a>
+                <div class="bottom-buttons">
+                    <a href="accountsettings.php">
+                        <span class="material-icons-sharp">account_circle</span>
+                        <h3>Account Settings</h3>
+                    </a>
+                    <form action="logout.php" method="post" style="display: inline;">
+                        <button type="submit" class="red">
+                            <span class="material-icons-sharp">logout</span>
+                            <h3>Log Out</h3>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Today</h1>
+
+            <div class="date">
+                <span id="current-date"></span>
+            </div>
+
+            <div class="recent-activity-wrapper">
+                <div class="recent-activity">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activity-list">
+                            <!-- Rows will be added dynamically here -->
+                        </tbody>
+                    </table>
+                    <button id="toggle-button">Show All</button>
+                </div>
+            </div>
+
+            <!-- Edit Reminder Modal -->
+            <div id="editModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Edit Reminder</h2>
+                    <form id="editForm">
+                        <input type="hidden" name="id" id="editReminderId">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" id="editDescription" required>
+                        <label for="reminder_date">Date:</label>
+                        <input type="date" name="reminder_date" id="editDate" required>
+                        <label for="reminder_time">Time:</label>
+                        <input type="time" name="reminder_time" id="editTime" required>
+                        <label for="location">Location:</label>
+                        <input type="text" name="location" id="editLocation" required>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b><?php echo htmlspecialchars($firstName); ?></b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="Profile Photo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js" defer></script>
     <script>
         document.getElementById('toggle-button').addEventListener('click', function() {
             const button = this;
@@ -167,9 +292,73 @@ if ($result->num_rows > 0) {
                         button.textContent = 'Hide All';
                     });
             } else {
+<<<<<<< HEAD
                 // Hide all reminders
                 tableBody.innerHTML = '';
                 button.textContent = 'Show All';
+=======
+                $('#editReminderId').val(reminder.id);
+                $('#editDescription').val(reminder.description);
+                $('#editDate').val(reminder.reminder_date);
+                $('#editTime').val(reminder.reminder_time);
+                $('#editLocation').val(reminder.location);
+
+                // Show the modal
+                $('#editModal').fadeIn();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching reminder data:', error);
+        }
+    });
+});
+
+// Close the modal
+$('.close').on('click', function() {
+    $('#editModal').fadeOut();
+});
+
+// Handle form submission for editing
+$('#editForm').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'update_reminder.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+            alert('Reminder updated successfully!');
+            $('#editModal').fadeOut();
+            location.reload(); // Reload the page to reflect changes
+        },
+        error: function(xhr, status, error) {
+            console.error('Error updating reminder:', error);
+            alert('Failed to update reminder.');
+        }
+    });
+});
+$(document).on('click', '.delete-reminder', function(e) {
+    e.preventDefault();
+    const reminderId = $(this).data('id');
+    const row = $(this).closest('tr');  // Get the closest <tr> element (the reminder row)
+
+    if (confirm('Are you sure you want to delete this reminder?')) {
+        $.ajax({
+            url: 'delete_reminder.php',
+            type: 'POST',  // Ensure we're using POST
+            data: { id: reminderId },  // Send the reminder ID
+            success: function(response) {
+                if (response.trim() === 'Success') {
+                    alert('Reminder deleted successfully!');
+                    row.remove();  // Remove the row from the table
+                } else {
+                    alert('Failed to delete reminder.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting reminder:', error);
+                alert('Error deleting reminder.');
+>>>>>>> cb895341b0971b817835ead69ccb384aa55fa87c
             }
         });
 
@@ -182,13 +371,13 @@ if ($result->num_rows > 0) {
                 .then(response => response.json())
                 .then(reminder => {
                     if (!reminder.error) {
-                        $('#editReminderId').val(reminder.id);
-                        $('#editDescription').val(reminder.description);
-                        $('#editDate').val(reminder.reminder_date);
-                        $('#editTime').val(reminder.reminder_time);
-                        $('#editLocation').val(reminder.location);
+                        document.getElementById('editReminderId').value = reminder.id;
+                        document.getElementById('editDescription').value = reminder.description;
+                        document.getElementById('editDate').value = reminder.reminder_date;
+                        document.getElementById('editTime').value = reminder.reminder_time;
+                        document.getElementById('editLocation').value = reminder.location;
 
-                        $('#editModal').fadeIn();
+                        document.getElementById('editModal').style.display = 'block';
                     }
                 });
         });
@@ -199,24 +388,19 @@ if ($result->num_rows > 0) {
             const id = $(this).data('id');
 
             if (confirm('Are you sure you want to delete this reminder?')) {
-                fetch('fetch_reminders.php', {
+                fetch('delete_reminder.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: new URLSearchParams({
-                        'action': 'delete',
                         'id': id,
                     }),
                 })
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(result => {
-                    if (result.message) {
-                        alert(result.message);
-                        location.reload();
-                    } else {
-                        alert(result.error);
-                    }
+                    alert(result);
+                    location.reload();
                 });
             }
         });
@@ -226,18 +410,15 @@ if ($result->num_rows > 0) {
             e.preventDefault();
 
             const formData = new FormData(this);
-            formData.append('action', 'edit');
-            fetch('fetch_reminders.php', {
+            fetch('update_reminder.php', {
                 method: 'POST',
-                body: new URLSearchParams(new FormData(this)),
+                body: formData,
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(result => {
-                alert(result.message || result.error);
-                if (result.message) {
-                    document.getElementById('editModal').style.display = 'none';
-                    location.reload();
-                }
+                alert(result);
+                document.getElementById('editModal').style.display = 'none';
+                location.reload();
             });
         });
 
