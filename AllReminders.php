@@ -292,9 +292,73 @@ if ($result->num_rows > 0) {
                         button.textContent = 'Hide All';
                     });
             } else {
+<<<<<<< HEAD
                 // Hide all reminders
                 tableBody.innerHTML = '';
                 button.textContent = 'Show All';
+=======
+                $('#editReminderId').val(reminder.id);
+                $('#editDescription').val(reminder.description);
+                $('#editDate').val(reminder.reminder_date);
+                $('#editTime').val(reminder.reminder_time);
+                $('#editLocation').val(reminder.location);
+
+                // Show the modal
+                $('#editModal').fadeIn();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching reminder data:', error);
+        }
+    });
+});
+
+// Close the modal
+$('.close').on('click', function() {
+    $('#editModal').fadeOut();
+});
+
+// Handle form submission for editing
+$('#editForm').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'update_reminder.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+            alert('Reminder updated successfully!');
+            $('#editModal').fadeOut();
+            location.reload(); // Reload the page to reflect changes
+        },
+        error: function(xhr, status, error) {
+            console.error('Error updating reminder:', error);
+            alert('Failed to update reminder.');
+        }
+    });
+});
+$(document).on('click', '.delete-reminder', function(e) {
+    e.preventDefault();
+    const reminderId = $(this).data('id');
+    const row = $(this).closest('tr');  // Get the closest <tr> element (the reminder row)
+
+    if (confirm('Are you sure you want to delete this reminder?')) {
+        $.ajax({
+            url: 'delete_reminder.php',
+            type: 'POST',  // Ensure we're using POST
+            data: { id: reminderId },  // Send the reminder ID
+            success: function(response) {
+                if (response.trim() === 'Success') {
+                    alert('Reminder deleted successfully!');
+                    row.remove();  // Remove the row from the table
+                } else {
+                    alert('Failed to delete reminder.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting reminder:', error);
+                alert('Error deleting reminder.');
+>>>>>>> cb895341b0971b817835ead69ccb384aa55fa87c
             }
         });
 
