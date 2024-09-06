@@ -253,25 +253,6 @@ if ($result->num_rows > 0) {
             </div>
         </div>
     </div>
-<!-- Edit Reminder Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Edit Reminder</h2>
-        <form id="editForm">
-            <input type="hidden" id="editReminderId" name="id">
-            <label for="editDescription">Description:</label>
-            <input type="text" id="editDescription" name="description" required>
-            <label for="editDate">Date:</label>
-            <input type="date" id="editDate" name="reminder_date" required>
-            <label for="editTime">Time:</label>
-            <input type="time" id="editTime" name="reminder_time" required>
-            <label for="editLocation">Location:</label>
-            <input type="text" id="editLocation" name="location">
-            <button type="submit">Update Reminder</button>
-        </form>
-    </div>
-</div>
 
     <script src="scripts.js" defer></script>
     <script>
@@ -333,8 +314,9 @@ if ($result->num_rows > 0) {
                         $('#editLocation').val(reminder.location);
 
                         $('#editModal').fadeIn();
-                    } else {
-                        alert(reminder.error);
+                    }  else {
+                alert(reminder.error);
+            }
                 });
         });
 
@@ -365,26 +347,37 @@ if ($result->num_rows > 0) {
                 });
             }
         });
-// Handle form submission
-document.getElementById('editForm').addEventListener('submit', function(e) {
+
+        // Handle edit form submission
+        $('#editForm').on('submit', function(e) {
     e.preventDefault();
 
-    const formData = new FormData(this);
-    formData.append('action', 'edit');
-    
-    fetch('fetch_reminders.php', {
-        method: 'POST',
-        body: new URLSearchParams(formData),
-    })
-    .then(response => response.json())
-    .then(result => {
-        alert(result.message || result.error);
-        if (result.message) {
-            $('#editModal').fadeOut();
-            location.reload();
+    $.ajax({
+        url: 'update_reminder.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+            const result = JSON.parse(response);
+            if (result.message) {
+                alert(result.message);
+                $('#editModal').fadeOut();
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert(result.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error updating reminder:', error);
+            alert('Failed to update reminder.');
         }
     });
 });
+
+// Close modal
+$('.close').on('click', function() {
+    $('#editModal').fadeOut();
+});
+       
         // Close modal
         document.querySelector('.close').addEventListener('click', function() {
             document.getElementById('editModal').style.display = 'none';

@@ -1,31 +1,39 @@
 <?php
-include 'auth.php'; 
+header('Content-Type: application/json');
+
+// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "reminder_app";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
 }
 
-// Get the form data
-$id = $_POST['id'];
-$description = $_POST['description'];
-$reminder_date = $_POST['reminder_date'];
-$reminder_time = $_POST['reminder_time'];
-$location = $_POST['location'];
+// Check if form data is received
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = intval($_POST['id']);
+    $description = $conn->real_escape_string($_POST['description']);
+    $reminder_date = $conn->real_escape_string($_POST['reminder_date']);
+    $reminder_time = $conn->real_escape_string($_POST['reminder_time']);
+    $location = $conn->real_escape_string($_POST['location']);
 
-// Update the reminder data
-$sql = "UPDATE reminders SET description = '$description', reminder_date = '$reminder_date', reminder_time = '$reminder_time', location = '$location' WHERE id = '$id'";
+    $stmt = $conn->prepare("UPDATE reminders SET description=?, reminder_date=?, reminder_time=?, location=? WHERE id=?");
+    $stmt->bind_param('ssssi', $description, $reminder_date, $reminder_time, $location, $id);
 
-if ($conn->query($sql) === TRUE) {
-    echo "Success";
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Reminder updated successfully"]);
+    } else {
+        echo json_encode(["error" => "Failed to update reminder"]);
+    }
+
+    $stmt->close();
 } else {
-    echo "Error updating reminder: " . $conn->error;
+    echo json_encode(["error" => "Invalid request method"]);
 }
+
+$conn->close();
 ?>
