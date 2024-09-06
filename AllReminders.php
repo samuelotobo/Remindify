@@ -253,6 +253,25 @@ if ($result->num_rows > 0) {
             </div>
         </div>
     </div>
+<!-- Edit Reminder Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Reminder</h2>
+        <form id="editForm">
+            <input type="hidden" id="editReminderId" name="id">
+            <label for="editDescription">Description:</label>
+            <input type="text" id="editDescription" name="description" required>
+            <label for="editDate">Date:</label>
+            <input type="date" id="editDate" name="reminder_date" required>
+            <label for="editTime">Time:</label>
+            <input type="time" id="editTime" name="reminder_time" required>
+            <label for="editLocation">Location:</label>
+            <input type="text" id="editLocation" name="location">
+            <button type="submit">Update Reminder</button>
+        </form>
+    </div>
+</div>
 
     <script src="scripts.js" defer></script>
     <script>
@@ -292,73 +311,9 @@ if ($result->num_rows > 0) {
                         button.textContent = 'Hide All';
                     });
             } else {
-<<<<<<< HEAD
                 // Hide all reminders
                 tableBody.innerHTML = '';
                 button.textContent = 'Show All';
-=======
-                $('#editReminderId').val(reminder.id);
-                $('#editDescription').val(reminder.description);
-                $('#editDate').val(reminder.reminder_date);
-                $('#editTime').val(reminder.reminder_time);
-                $('#editLocation').val(reminder.location);
-
-                // Show the modal
-                $('#editModal').fadeIn();
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching reminder data:', error);
-        }
-    });
-});
-
-// Close the modal
-$('.close').on('click', function() {
-    $('#editModal').fadeOut();
-});
-
-// Handle form submission for editing
-$('#editForm').on('submit', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'update_reminder.php',
-        type: 'POST',
-        data: $(this).serialize(),
-        success: function(response) {
-            alert('Reminder updated successfully!');
-            $('#editModal').fadeOut();
-            location.reload(); // Reload the page to reflect changes
-        },
-        error: function(xhr, status, error) {
-            console.error('Error updating reminder:', error);
-            alert('Failed to update reminder.');
-        }
-    });
-});
-$(document).on('click', '.delete-reminder', function(e) {
-    e.preventDefault();
-    const reminderId = $(this).data('id');
-    const row = $(this).closest('tr');  // Get the closest <tr> element (the reminder row)
-
-    if (confirm('Are you sure you want to delete this reminder?')) {
-        $.ajax({
-            url: 'delete_reminder.php',
-            type: 'POST',  // Ensure we're using POST
-            data: { id: reminderId },  // Send the reminder ID
-            success: function(response) {
-                if (response.trim() === 'Success') {
-                    alert('Reminder deleted successfully!');
-                    row.remove();  // Remove the row from the table
-                } else {
-                    alert('Failed to delete reminder.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error deleting reminder:', error);
-                alert('Error deleting reminder.');
->>>>>>> cb895341b0971b817835ead69ccb384aa55fa87c
             }
         });
 
@@ -371,14 +326,15 @@ $(document).on('click', '.delete-reminder', function(e) {
                 .then(response => response.json())
                 .then(reminder => {
                     if (!reminder.error) {
-                        document.getElementById('editReminderId').value = reminder.id;
-                        document.getElementById('editDescription').value = reminder.description;
-                        document.getElementById('editDate').value = reminder.reminder_date;
-                        document.getElementById('editTime').value = reminder.reminder_time;
-                        document.getElementById('editLocation').value = reminder.location;
+                        $('#editReminderId').val(reminder.id);
+                        $('#editDescription').val(reminder.description);
+                        $('#editDate').val(reminder.reminder_date);
+                        $('#editTime').val(reminder.reminder_time);
+                        $('#editLocation').val(reminder.location);
 
-                        document.getElementById('editModal').style.display = 'block';
-                    }
+                        $('#editModal').fadeIn();
+                    } else {
+                        alert(reminder.error);
                 });
         });
 
@@ -388,40 +344,47 @@ $(document).on('click', '.delete-reminder', function(e) {
             const id = $(this).data('id');
 
             if (confirm('Are you sure you want to delete this reminder?')) {
-                fetch('delete_reminder.php', {
+                fetch('fetch_reminders.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: new URLSearchParams({
+                        'action': 'delete',
                         'id': id,
                     }),
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(result => {
-                    alert(result);
-                    location.reload();
+                    if (result.message) {
+                        alert(result.message);
+                        location.reload();
+                    } else {
+                        alert(result.error);
+                    }
                 });
             }
         });
+// Handle form submission
+document.getElementById('editForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-        // Handle edit form submission
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            fetch('update_reminder.php', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.text())
-            .then(result => {
-                alert(result);
-                document.getElementById('editModal').style.display = 'none';
-                location.reload();
-            });
-        });
-
+    const formData = new FormData(this);
+    formData.append('action', 'edit');
+    
+    fetch('fetch_reminders.php', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+    })
+    .then(response => response.json())
+    .then(result => {
+        alert(result.message || result.error);
+        if (result.message) {
+            $('#editModal').fadeOut();
+            location.reload();
+        }
+    });
+});
         // Close modal
         document.querySelector('.close').addEventListener('click', function() {
             document.getElementById('editModal').style.display = 'none';
