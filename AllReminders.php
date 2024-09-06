@@ -346,16 +346,17 @@ $('#editForm').on('submit', function(e) {
 $(document).on('click', '.delete-reminder', function(e) {
     e.preventDefault();
     const reminderId = $(this).data('id');
+    const row = $(this).closest('tr');  // Get the closest <tr> element (the reminder row)
 
     if (confirm('Are you sure you want to delete this reminder?')) {
         $.ajax({
             url: 'delete_reminder.php',
-            type: 'POST',  // Change from 'GET' to 'POST'
-            data: { id: reminderId },  // Pass reminderId in the POST body
+            type: 'POST',  // Ensure we're using POST
+            data: { id: reminderId },  // Send the reminder ID
             success: function(response) {
                 if (response.trim() === 'Success') {
                     alert('Reminder deleted successfully!');
-                    location.reload();  // Reload the page to reflect changes
+                    row.remove();  // Remove the row from the table
                 } else {
                     alert('Failed to delete reminder.');
                 }
