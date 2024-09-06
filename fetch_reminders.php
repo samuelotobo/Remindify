@@ -1,29 +1,36 @@
-<?php
-include 'auth.php'; 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "reminder_app";
+    <?php
+    header('Content-Type: application/json');
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "reminder_app";
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Create connection
+    $link = mysqli_connect($servername, $username, $password, $dbname);
 
-// Get the logged-in user's ID
-$user_id = $_SESSION['user_id'];
+    // Check connection
 
-// Fetch all reminders for the logged-in user
-$sql = "SELECT * FROM reminders WHERE user_id = '$user_id'";
-$result = $conn->query($sql);
+    if (!$link) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
-$reminders = [];
-while ($row = $result->fetch_assoc()) {
-    $reminders[] = $row;
-}
+    // Query to fetch reminders
+    $query = "SELECT id, description, reminder_date, reminder_time, location FROM reminders";
+    $result = mysqli_query($link, $query);
 
-echo json_encode($reminders);
-?>
+    $reminders = array();
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $reminders[] = $row;
+        }
+    } else {
+        echo json_encode(["message" => "No reminders found"]);
+        exit;
+    }
+
+    mysqli_close($link);
+
+    echo json_encode($reminders);
+    ?>
