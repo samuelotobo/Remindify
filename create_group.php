@@ -30,23 +30,17 @@ if ($conn->connect_error) {
 }
 
 if (isset($_POST['group_name'])) {
-    $group_name = trim($_POST['group_name']);
-    if (!empty($group_name)) {
-        $stmt = $conn->prepare("INSERT INTO groups (group_name, user_id) VALUES (?, ?)");
-        $stmt->bind_param("si", $group_name, $user_id);
-        
-        if ($stmt->execute()) {
-            echo "success";
-        } else {
-            echo "Error: " . $conn->error;
-        }
+    $stmt = $conn->prepare("INSERT INTO groups (group_name, user_id) VALUES (?, ?)");
+    $stmt->bind_param("si", $group_name, $user_id); // Corrected binding
 
-        $stmt->close();
+    if ($stmt->execute()) {
+        echo "success";
     } else {
-        echo "Group name cannot be empty";
+        echo "Error: " . $stmt->error;
     }
-} else {
-    echo "Invalid request";
+
+    $stmt->close();
 }
 
+$conn->close();
 ?>
