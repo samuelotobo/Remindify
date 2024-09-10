@@ -41,61 +41,91 @@ if ($result->num_rows > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Reminders │ Remindify</title>
     <link rel="shortcut icon" type="x-icon" href="logo.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
-    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>/* Modal styles */
-.modal {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
+    <style>
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
-</style>
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -111,17 +141,16 @@ button[type="submit"]:hover {
             </div>
 
             <div class="sidebar">
-                <a href="dashboard.php" >
+                <a href="dashboard.php">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
                 <a href="#" class="active">
                     <span class="material-icons-sharp">today</span>
                     <h3>All Reminders</h3>
-                    <!-- <span class="today-count">3</span> -->
                 </a>
                 <a href="#" class="active">
-                <span class="material-icons-sharp">schedule_send</span>
+                    <span class="material-icons-sharp">schedule_send</span>
                     <h3>Shared Calendar</h3>
                 </a>
                 <a href="calendar.php">
@@ -140,27 +169,20 @@ button[type="submit"]:hover {
                     <span class="material-icons-sharp">delete</span>
                     <h3>Recycle Bin</h3>
                 </a>
-                <!-- <a href="settings.html">
-                    <span class="material-icons-sharp">settings</span>
-                    <h3>Settings</h3>
-                </a> -->
                 <div class="bottom-buttons">
                     <a href="accountsettings.php">
                         <span class="material-icons-sharp">account_circle</span>
                         <h3>Account Settings</h3>
                     </a>
                     <form action="logout.php" method="post" style="display: inline;">
-    <button type="submit" class="red">
-        <span class="material-icons-sharp">logout</span>
-        <h3>Log Out</h3>
-    </button>
-</form>
-
+                        <button type="submit" class="red">
+                            <span class="material-icons-sharp">logout</span>
+                            <h3>Log Out</h3>
+                        </button>
+                    </form>
                 </div>
             </div>
         </aside>
-
-        <!-- ----------------end of aside ;))))) ---------------- -->
 
         <main>
             <h1>Today</h1>
@@ -168,52 +190,48 @@ button[type="submit"]:hover {
             <div class="date">
                 <span id="current-date"></span>
             </div>
-<!-- Add this in your HTML where you want to display the reminders -->
-<div class="recent-activity-wrapper">
-    <div class="recent-activity">
-        <!-- <h2>Recent Activities</h2> -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-            <tbody id="activity-list">
-                <!-- Rows will be added dynamically here -->
-            </tbody>
-        </table>
-        <button id="toggle-button">Show All</button>
-    </div>
-</div>
 
+            <div class="recent-activity-wrapper">
+                <div class="recent-activity">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activity-list">
+                            <!-- Rows will be added dynamically here -->
+                        </tbody>
+                    </table>
+                    <button id="toggle-button">Show All</button>
+                </div>
+            </div>
 
-<!-- Edit Reminder Modal -->
-<div id="editModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Edit Reminder</h2>
-        <form id="editForm">
-            <input type="hidden" name="id" id="editReminderId">
-            <label for="description">Description:</label>
-            <input type="text" name="description" id="editDescription" required>
-            <label for="reminder_date">Date:</label>
-            <input type="date" name="reminder_date" id="editDate" required>
-            <label for="reminder_time">Time:</label>
-            <input type="time" name="reminder_time" id="editTime" required>
-            <label for="location">Location:</label>
-            <input type="text" name="location" id="editLocation" required>
-            <button type="submit">Save Changes</button>
-        </form>
-    </div>
-</div>
-
-
-
+            <!-- Edit Reminder Modal -->
+            <div id="editModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Edit Reminder</h2>
+                    <form id="editForm">
+                        <input type="hidden" name="id" id="editReminderId">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" id="editDescription" required>
+                        <label for="reminder_date">Date:</label>
+                        <input type="date" name="reminder_date" id="editDate" required>
+                        <label for="reminder_time">Time:</label>
+                        <input type="time" name="reminder_time" id="editTime" required>
+                        <label for="location">Location:</label>
+                        <input type="text" name="location" id="editLocation" required>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
         </main>
-        <!-- ============================ END OF MAIN===================== -->
+
         <div class="right">
             <div class="top">
                 <button id="menu-btn">
@@ -225,107 +243,113 @@ button[type="submit"]:hover {
                 </div>
                 <div class="profile">
                     <div class="info">
-                        <!-- Dynamically display first name -->
-                        <p>Hey, <b><?php echo $firstName; ?></b></p>
-                        <small class="text-muted">Admin</small> <!-- This role can be dynamic if needed -->
+                        <p>Hey, <b><?php echo htmlspecialchars($firstName); ?></b></p>
+                        <small class="text-muted">Admin</small>
                     </div>
                     <div class="profile-photo">
-                        <!-- Dynamically display profile picture -->
-                        <img src="<?php echo $imageSrc; ?>" alt="Profile Photo">
+                        <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="Profile Photo">
                     </div>
                 </div>
             </div>
-                <!-- === end of top === -->
         </div>
     </div>
-    
+
     <script src="scripts.js" defer></script>
     <script>
-    document.getElementById('toggle-button').addEventListener('click', function() {
-        const button = this;
-        const tableBody = document.getElementById('activity-list');
+        document.getElementById('toggle-button').addEventListener('click', function() {
+            const button = this;
+            const tableBody = document.getElementById('activity-list');
 
-        if (button.textContent === 'Show All') {
-            // Fetch and show all reminders
-            fetch('fetch_reminders.php')
-                .then(response => response.json())
-                .then(data => {
-                    tableBody.innerHTML = ''; // Clear existing rows
+            if (button.textContent === 'Show All') {
+                // Fetch and show all reminders
+                fetch('fetch_reminders.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        tableBody.innerHTML = ''; // Clear existing rows
 
-                    data.forEach((reminder, index) => {
-                        const row = document.createElement('tr');
-                        const className = (index % 2 === 0) ? 'list_odd_item' : 'list_even_item';
-                        row.className = className;
-                        row.innerHTML = `
-                            <td>${reminder.description}</td>
-                            <td>${reminder.reminder_date}</td>
-                            <td>${reminder.reminder_time}</td>
-                            <td>${reminder.location}</td>
-                              <td>
-            <div class="dropdown">
-                <button class="dropbtn">Actions</button>
-                <div class="dropdown-content">
-                    <a href="#" class="edit-reminder" data-id="${reminder.id}">Edit</a>
-                    <a href="#" class="delete-reminder" data-id="${reminder.id}">Delete</a>
-                </div>
-            </div>
-        </td>
-                        `;
-                        tableBody.appendChild(row);
+                        data.forEach((reminder, index) => {
+                            const row = document.createElement('tr');
+                            const className = (index % 2 === 0) ? 'list_odd_item' : 'list_even_item';
+                            row.className = className;
+                            row.innerHTML = `
+                                <td>${reminder.description}</td>
+                                <td>${reminder.reminder_date}</td>
+                                <td>${reminder.reminder_time}</td>
+                                <td>${reminder.location}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="dropbtn">Actions</button>
+                                        <div class="dropdown-content">
+                                            <a href="#" class="edit-reminder" data-id="${reminder.id}">Edit</a>
+                                            <a href="#" class="delete-reminder" data-id="${reminder.id}">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+
+                        button.textContent = 'Hide All';
                     });
-
-                    button.textContent = 'Show Less'; // Change button text to "Show Less"
-                })
-                .catch(error => {
-                    console.error('Error fetching reminders:', error);
-                });
-        } else {
-            // Hide the content
-            tableBody.innerHTML = ''; // Clear the table body content
-            button.textContent = 'Show All'; // Change button text back to "Show All"
-        }
-    });
-
-
-// Show modal and populate with reminder data on edit button click
-
-$(document).on('click', '.edit-reminder', function(e) {
-    e.preventDefault();
-    const reminderId = $(this).data('id');
-
-    // Fetch reminder data via AJAX
-    $.ajax({
-        url: 'fetch_single_reminder.php',
-        type: 'GET',
-        data: { id: reminderId },
-        success: function(data) {
-            const reminder = JSON.parse(data);
-            if (reminder.error) {
-                alert(reminder.error);
             } else {
-                $('#editReminderId').val(reminder.id);
-                $('#editDescription').val(reminder.description);
-                $('#editDate').val(reminder.reminder_date);
-                $('#editTime').val(reminder.reminder_time);
-                $('#editLocation').val(reminder.location);
-
-                // Show the modal
-                $('#editModal').fadeIn();
+                // Hide all reminders
+                tableBody.innerHTML = '';
+                button.textContent = 'Show All';
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching reminder data:', error);
-        }
-    });
-});
+        });
 
-// Close the modal
-$('.close').on('click', function() {
-    $('#editModal').fadeOut();
-});
+        // Handle edit button click
+        $(document).on('click', '.edit-reminder', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
 
-// Handle form submission for editing
-$('#editForm').on('submit', function(e) {
+            fetch(`fetch_single_reminder.php?id=${id}`)
+                .then(response => response.json())
+                .then(reminder => {
+                    if (!reminder.error) {
+                        $('#editReminderId').val(reminder.id);
+                        $('#editDescription').val(reminder.description);
+                        $('#editDate').val(reminder.reminder_date);
+                        $('#editTime').val(reminder.reminder_time);
+                        $('#editLocation').val(reminder.location);
+
+                        $('#editModal').fadeIn();
+                    }  else {
+                alert(reminder.error);
+            }
+                });
+        });
+
+        // Handle delete button click
+        $(document).on('click', '.delete-reminder', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+
+            if (confirm('Are you sure you want to delete this reminder?')) {
+                fetch('fetch_reminders.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'action': 'delete',
+                        'id': id,
+                    }),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.message) {
+                        alert(result.message);
+                        location.reload();
+                    } else {
+                        alert(result.error);
+                    }
+                });
+            }
+        });
+
+        // Handle edit form submission
+        $('#editForm').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -333,9 +357,14 @@ $('#editForm').on('submit', function(e) {
         type: 'POST',
         data: $(this).serialize(),
         success: function(response) {
-            alert('Reminder updated successfully!');
-            $('#editModal').fadeOut();
-            location.reload(); // Reload the page to reflect changes
+            const result = JSON.parse(response);
+            if (result.message) {
+                alert(result.message);
+                $('#editModal').fadeOut();
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert(result.error);
+            }
         },
         error: function(xhr, status, error) {
             console.error('Error updating reminder:', error);
@@ -343,40 +372,23 @@ $('#editForm').on('submit', function(e) {
         }
     });
 });
-$(document).on('click', '.delete-reminder', function(e) {
-    e.preventDefault();
-    const reminderId = $(this).data('id');
-    const row = $(this).closest('tr');  // Get the closest <tr> element (the reminder row)
 
-    if (confirm('Are you sure you want to delete this reminder?')) {
-        $.ajax({
-            url: 'delete_reminder.php',
-            type: 'POST',  // Ensure we're using POST
-            data: { id: reminderId },  // Send the reminder ID
-            success: function(response) {
-                if (response.trim() === 'Success') {
-                    alert('Reminder deleted successfully!');
-                    row.remove();  // Remove the row from the table
-                } else {
-                    alert('Failed to delete reminder.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error deleting reminder:', error);
-                alert('Error deleting reminder.');
-            }
-        });
-    }
-});
-
-
-
+// Close modal
 $('.close').on('click', function() {
-    $('#editForm')[0].reset(); // Reset the form
     $('#editModal').fadeOut();
 });
+       
+        // Close modal
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('editModal').style.display = 'none';
+        });
 
-</script>
-        <script src="dashboard.js"></script>
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('editModal')) {
+                document.getElementById('editModal').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

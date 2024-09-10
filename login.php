@@ -21,9 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Debugging: Check received values
-    echo "Email: " . htmlspecialchars($email) . "<br>";
-    echo "Password: " . htmlspecialchars($password) . "<br>";
-
+    // echo "Email: " . htmlspecialchars($email) . "<br>";
+    // echo "Password: " . htmlspecialchars($password) . "<br>";
     // Prepare and execute the SQL statement
     if ($stmt = $conn->prepare("SELECT id, password FROM users WHERE email = ?")) {
         $stmt->bind_param("s", $email);
