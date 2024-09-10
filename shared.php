@@ -237,12 +237,20 @@ if (!isset($_SESSION['email'])) {
                     $group_id = htmlspecialchars($row['group_id']);
                     $group_name = htmlspecialchars($row['group_name']);
                     echo "<div class='group-item' data-group-id='$group_id'>
-                            <h2>$group_name</h2>
+                    <section class='reminder'>     
+                    <h2>$group_name</h2>
+                    </section>
+                    <footer> 
+                    <div class='dropdown'>
                             <button class='add-reminder-btn'>Add Reminder</button>
                             <button class='view-participants-btn'>View Participants</button>
                             <button class='edit-group-btn'>Edit Group</button>
                             <button class='delete-group-btn'>Delete Group</button>
-                          </div>";
+                          </div>
+                          </footer>
+                    </div>
+                          ";
+                    
                 }
             } else {
                 echo "<p>No groups available.</p>";
