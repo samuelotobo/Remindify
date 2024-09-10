@@ -129,34 +129,47 @@ if (!isset($_SESSION['email'])) {
 .plan button:focus {
   background-color: var(--c-governor);
 }
-.form-container {
-    margin-top: 2rem;
-    background: var(--color-white);
-    padding: var(--card-padding);
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--box-shadow);
-    width: 300px;
+/* Container for the entire groups list */
+.container {
+    margin: 2rem auto;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+/* Each group item should be smaller and aligned side by side */
+.group-item {
+    background-color: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Smaller size for the group containers */
+    margin: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
 }
 
 header h1 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: var(--color-dark);
     margin-bottom: 1rem;
     text-align: center;
 }
 
 .reminder h2 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--color-info-dark);
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
 footer {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+    position: relative;
+    text-align: right;
 }
 
 .dropdown {
@@ -178,7 +191,7 @@ footer {
     right: 0;
     background-color: var(--color-white);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: var(--border-radius-1);
 }
@@ -200,20 +213,74 @@ footer {
     background-color: var(--color-light);
 }
 
-.dropdown-content .edit-btn {
-    color: var(--color-primary);
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
 }
 
-.dropdown-content .add-reminder-btn{
-    color: var(--color-success);
-}
-.dropdown-content .details-btn {
-    color: var(--color-dark-variant);
+.plan {
+    background-color: var(--c-white);
+    color: var(--c-del-rio);
+    max-width: 400px;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 30px 30px -25px rgba(65, 51, 183, 0.25);
 }
 
-.dropdown-content .delete-btn {
-    color: var(--color-danger);
+.inner {
+    padding: 20px;
+    background-color: var(--c-fair-pink);
+    border-radius: 12px;
 }
+
+.title {
+    font-size: 1.5rem;
+    color: var(--c-coffee);
+    margin-bottom: 1rem;
+}
+
+.features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.icon {
+    margin-right: 10px;
+    background-color: var(--c-java);
+    color: var(--c-white);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--c-indigo);
+    color: var(--c-white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--c-governor);
+}
+
+
 </style>
 </head>
 <body>
@@ -308,41 +375,64 @@ footer {
         </div>
 
 
-
         <div class="container">
-        <h1>Shared Groups</h1>
-        <div class="groups-list">
-            <?php
-            // Fetch all groups
-            $sql = "SELECT * FROM groups";
-            $result = $conn->query($sql);
+    <h1>Shared Groups</h1>
+    <div class="groups-list">
+        <?php
+        // Fetch all groups
+        $sql = "SELECT * FROM groups";
+        $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    $group_id = htmlspecialchars($row['group_id']);
-                    $group_name = htmlspecialchars($row['group_name']);
-                    echo "<div class='group-item' data-group-id='$group_id'>
-                    <section class='reminder'>     
-                    <h2>$group_name</h2>
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $group_id = htmlspecialchars($row['group_id']);
+                $group_name = htmlspecialchars($row['group_name']);
+                echo "
+                <div class='group-item' data-group-id='$group_id'>
+                    <header>
+                        <h1>$group_name</h1>
+                    </header>
+
+                    <section class='reminder'>
+                        <h2>Upcoming Event</h2>
                     </section>
-                    <footer> 
-                    <div class='dropdown'>
-                            <button class='add-reminder-btn'>Add Reminder</button>
-                            <button class='view-participants-btn'>View Participants</button>
-                            <button class='edit-group-btn'>Edit Group</button>
-                            <button class='delete-group-btn'>Delete Group</button>
-                          </div>
-                          </footer>
+
+                    <footer>
+                        <div class='dropdown'>
+                            <button class='dropbtn'>⋮</button>
+                            <div class='dropdown-content'>
+                                <a href='#' class='add-reminder-btn'>Add Reminder</a>
+                                <a href='#' class='view-participants-btn'>View Participants</a>
+                                <a href='#' class='details-btn'>Details</a>
+                                <a href='#' class='edit-btn' onclick='openModal($group_id)'>Edit</a>
+                                <a href='#' class='delete-btn'>Delete</a>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+
+                <!-- Modal for Editing Group -->
+                <div id='myModal-$group_id' class='modal'>
+                    <div class='plan'>
+                        <div class='inner'>
+                            <h2 class='title'>Edit Group</h2>
+                            <ul class='features'>
+                                <li><span class='icon'>✓</span>Change group name</li>
+                                <li><span class='icon'>✓</span>Manage reminders</li>
+                            </ul>
+                            <button>Save Changes</button>
+                        </div>
                     </div>
-                          ";
-                    
-                }
-            } else {
-                echo "<p>No groups available.</p>";
+                </div>";
             }
-            ?>
-        </div>
+        } else {
+            echo "<p>No groups available.</p>";
+        }
+        ?>
     </div>
+</div>
+
+
 
     <!-- Modals -->
     <div id="modal-container">
@@ -353,7 +443,7 @@ footer {
                 <h2>Add Reminder</h2>
                 <form id="add-reminder-form">
                     <input type="hidden" id="add-group-id">
-                    <label for="reminder-description">Description:</label>
+                    <label for="reminder-description">Description:</label
                     <textarea id="reminder-description" required></textarea>
                     <label for="reminder-date">Date:</label>
                     <input type="date" id="reminder-date" required>
@@ -449,6 +539,31 @@ footer {
     </div>
     <script src="./dashboard.js"></script>
     <script>
+        // Get the modal
+var modals = document.querySelectorAll(".modal");
+
+// Get the buttons that open the modal
+var editButtons = document.querySelectorAll(".edit-btn");
+
+// Get the <span> element that closes the modal
+var closeButtons = document.querySelectorAll(".close");
+
+// When the user clicks the edit button, open the corresponding modal
+editButtons.forEach((button, index) => {
+    button.addEventListener('click', function() {
+        modals[index].style.display = "block";
+    });
+});
+
+// When the user clicks anywhere outside the modal, close it
+window.onclick = function(event) {
+    modals.forEach(modal => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+};
+
         document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('notification-modal');
     const viewParticipantsBtn = document.getElementById('view-participants-btn');
@@ -687,6 +802,18 @@ document.querySelectorAll('.add-reminder-btn').forEach(button => {
         document.getElementById('notification-title').innerText = 'Add Reminder to Group ' + groupId;
     });
 });
+
+function openModal(groupId) {
+    var modal = document.getElementById('myModal-' + groupId);
+    modal.style.display = 'block';
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+}
 
     </script>
 </body>
