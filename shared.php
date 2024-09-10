@@ -129,6 +129,91 @@ if (!isset($_SESSION['email'])) {
 .plan button:focus {
   background-color: var(--c-governor);
 }
+.form-container {
+    margin-top: 2rem;
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    width: 300px;
+    position: relative;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    color: var(--color-dark);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.reminder h2 {
+    font-size: 1.4rem;
+    color: var(--color-info-dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: var(--color-dark-variant);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--color-white);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: var(--border-radius-1);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    color: var(--color-info-dark);
+    padding: 12px 16px;
+    text-decoration: none;
+    border-radius: var(--border-radius-1);
+    transition: background 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--color-light);
+}
+
+.dropdown-content .edit-btn {
+    color: var(--color-primary);
+}
+
+.dropdown-content .add-reminder-btn{
+    color: var(--color-success);
+}
+.dropdown-content .details-btn {
+    color: var(--color-dark-variant);
+}
+
+.dropdown-content .delete-btn {
+    color: var(--color-danger);
+}
 </style>
 </head>
 <body>
