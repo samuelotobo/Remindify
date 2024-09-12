@@ -72,7 +72,7 @@ if (!isset($_SESSION['email'])) {
                     <h3>All Reminders</h3>
                     <!-- <span class="today-count">3</span> -->
                 </a>
-                <a href="shared.php" class="active">
+                <a href="shared.php">
                 <span class="material-icons-sharp">schedule_send</span>
                     <h3>Shared Calendar</h3>
                 </a>
@@ -84,10 +84,10 @@ if (!isset($_SESSION['email'])) {
                     <span class="material-icons-sharp">savings</span>
                     <h3>My Wallet</h3>
                 </a>
-                <a href="completed.php">
+                <!-- <a href="completed.php">
                     <span class="material-icons-sharp">assignment_turned_in</span>
                     <h3>Completed</h3>
-                </a>
+                </a> -->
                 <a href="recyclebin.php">
                     <span class="material-icons-sharp">delete</span>
                     <h3>Recycle Bin</h3>

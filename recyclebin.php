@@ -68,7 +68,7 @@ if ($result->num_rows > 0) {
                     <h3>All Reminders</h3>
                     <!-- <span class="today-count">3</span> -->
                 </a>
-                <a href="#" class="active">
+                <a href="shared.php">
                 <span class="material-icons-sharp">schedule_send</span>
                     <h3>Shared Calendar</h3>
                 </a>
@@ -80,10 +80,10 @@ if ($result->num_rows > 0) {
                     <span class="material-icons-sharp">savings</span>
                     <h3>My Wallet</h3>
                 </a>
-                <a href="completed.php">
+                <!-- <a href="completed.php">
                     <span class="material-icons-sharp">assignment_turned_in</span>
                     <h3>Completed</h3>
-                </a>
+                </a> -->
                 <a href="#" class="active">
                     <span class="material-icons-sharp" class="active">delete</span>
                     <h3>Recycle Bin</h3>

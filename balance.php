@@ -185,10 +185,10 @@ $conn->close();
                     <span class="material-icons-sharp">savings</span>
                     <h3>My Wallet</h3>
                 </a>
-                <a href="completed.php">
+                <!-- <a href="completed.php">
                     <span class="material-icons-sharp">assignment_turned_in</span>
                     <h3>Completed</h3>
-                </a>
+                </a> -->
                 <a href="recyclebin.php">
                     <span class="material-icons-sharp">delete</span>
                     <h3>Recycle Bin</h3>
