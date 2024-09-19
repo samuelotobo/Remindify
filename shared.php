@@ -446,19 +446,6 @@ button:hover {
                     </footer>
                 </div>
 
-                <!-- Modal for Editing Group -->
-                <div id='myModal-$group_id' class='modal'>
-                    <div class='plan'>
-                        <div class='inner'>
-                            <h2 class='title'>Edit Group</h2>
-                            <ul class='features'>
-                                <li><span class='icon'>✓</span>Change group name</li>
-                                <li><span class='icon'>✓</span>Manage reminders</li>
-                            </ul>
-                            <button>Save Changes</button>
-                        </div>
-                    </div>
-                </div>";
 
                 
 
@@ -508,6 +495,19 @@ button:hover {
             </div>
         </div>
     </div>
+                <!-- Modal for Editing Group -->
+                <div id='myModal-$group_id' class='modal'>
+                    <div class='plan'>
+                        <div class='inner'>
+                            <h2 class='title'>Edit Group</h2>
+                            <ul class='features'>
+                                <li><span class='icon'>✓</span>Change group name</li>
+                                <li><span class='icon'>✓</span>Manage reminders</li>
+                            </ul>
+                            <button>Save Changes</button>
+                        </div>
+                    </div>
+                </div>";
             }
         } else {
             echo "<p>No groups available.</p>";
