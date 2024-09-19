@@ -754,7 +754,7 @@ button:hover {
         .catch(error => console.error('Error sending notifications:', error));
     }
 });
-
+    <script src="dashboard.js"></script>
     </script>
 </body>
 </html>

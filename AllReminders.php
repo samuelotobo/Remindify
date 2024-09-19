@@ -390,5 +390,6 @@ $('.close').on('click', function() {
             }
         });
     </script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

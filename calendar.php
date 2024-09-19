@@ -71,6 +71,7 @@ if ($result->num_rows > 0) {
                 </a>
                 <a href="shared.php">
                 <span class="material-icons-sharp">schedule_send</span>
+                <h3>Shared Calendar</h3>
                 </a>
                 <a href="#" class="active">
                     <span class="material-icons-sharp">calendar_month</span>
