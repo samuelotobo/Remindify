@@ -273,7 +273,7 @@ $conn->close();
             </div>
         </main>
     </div>
-
+    <script src="dashboard.js"></script>                  
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Handle form submissions
