@@ -459,7 +459,9 @@ button:hover {
                         </div>
                     </div>
                 </div>";
+
                 
+
 
     <!-- Modals -->
     <div id="modal-container">
@@ -506,6 +508,14 @@ button:hover {
             </div>
         </div>
     </div>
+            }
+        } else {
+            echo "<p>No groups available.</p>";
+        }
+        ?>
+    </div>
+</div>
+
 
         </main>
 
@@ -537,15 +547,6 @@ button:hover {
         </div>
     </article>
 </div>
-            }
-        } else {
-            echo "<p>No groups available.</p>";
-        }
-        ?>
-    </div>
-</div>
-
-
 
 
         <!-- ============================ END OF MAIN===================== -->
@@ -754,7 +755,7 @@ button:hover {
         .catch(error => console.error('Error sending notifications:', error));
     }
 });
-    <script src="dashboard.js"></script>
+
     </script>
 </body>
 </html>
