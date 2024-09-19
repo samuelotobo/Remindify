@@ -67,7 +67,7 @@ if ($result->num_rows > 0) {
                     <h3>All Reminders</h3>
                     <!-- <span class="today-count">3</span> -->
                 </a>
-                <a href="#" class="active">
+                <a href="shared.php">
                 <span class="material-icons-sharp">schedule_send</span>
                     <h3>Shared Calendar</h3>
                 </a>
