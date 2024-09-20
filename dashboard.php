@@ -139,25 +139,25 @@ if (!isset($_SESSION['email'])) {
 
             <!-- --------------------END OF INSIGHTS------------------ -->
             
-            <div class="recent-activity-wrapper">
-    <div class="recent-activity">
-        <!-- <h2>Recent Activities</h2> -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-            <tbody id="activity-list">
-                <!-- Rows will be added dynamically here -->
-            </tbody>
-        </table>
-        <button id="toggle-button">Show All</button>
-        </div>
-    </div>
+                <div class="recent-activity-wrapper">
+        <div class="recent-activity">
+            <!-- <h2>Recent Activities</h2> -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody id="activity-list">
+                    <!-- Rows will be added dynamically here -->
+                </tbody>
+            </table>
+            <button id="toggle-button">Show All</button>
+           </div>
+        </div>
 </main>
         <!-- ============================ END OF MAIN===================== -->
         <div class="right">

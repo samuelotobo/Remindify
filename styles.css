@@ -321,16 +321,16 @@ main .date #current-date {
     color: var(--color-dark);
 }
 
-/* ==================== Recent Orders =================== */
-main .recent-activity{
+/* ==================== Recent Activities =================== */
+main .recent-activity-wrapper {
+    max-height: calc(100vh - 200px); /* Adjust this value based on the height of other elements */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 0; /* Remove padding if any */
+    margin-top: 2rem; /* Match existing margin */
+}
+
+main .recent-activity {
     margin-top: 2rem;
-}
-
-main .recent-activity h2{
-    margin-bottom: 0.8rem;
-}
-
-main .recent-activity table{
     background: var(--color-white);
     width: 100%;
     border-radius: var(--card-border-radius);
@@ -338,37 +338,54 @@ main .recent-activity table{
     text-align: center;
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
-    -webkit-border-radius: var(--card-border-radius);
-    -moz-border-radius: var(--card-border-radius);
-    -ms-border-radius: var(--card-border-radius);
-    -o-border-radius: var(--card-border-radius);
 }
 
-main .recent-activity table:hover{
+main .recent-activity:hover {
     box-shadow: none;
 }
 
-main table tbody td{
+main .recent-activity h2 {
+    margin-bottom: 0.8rem;
+}
+
+main .recent-activity table {
+    width: 100%;
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    border-collapse: collapse; /* Merge rule for table layout */
+}
+
+main .recent-activity table:hover {
+    box-shadow: none;
+}
+
+main .recent-activity table th,
+main .recent-activity table td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
     color: var(--color-dark-variant);
+    padding: 0.5rem; /* Adjust padding for table cells */
 }
 
-main table tbody tr:last-child td{
+main .recent-activity table tbody tr:last-child td {
     border: none;
 }
 
-main .recent-activity a{
+main .recent-activity a,
+main .recent-activity button {
     text-align: center;
     display: block;
     margin: 1rem auto;
+}
+
+main .recent-activity a {
     color: var(--color-primary);
 }
 
-main .recent-activity button{
-    text-align: center;
-    display: block;
-    margin: rem auto;
+main .recent-activity button {
     color: var(--color-white);
 }
 
@@ -995,64 +1012,7 @@ button:hover {
     color: var(--color-dark-variant);
 }
 
-
-
-
-main .recent-activity-wrapper {
-    max-height: calc(100vh - 200px); /* Adjust this value based on the height of other elements */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 0; /* Remove padding if any */
-    margin-top: 2rem; /* Match existing margin */
-}
-
-/* Existing styles */
-main .recent-activity {
-    background: var(--color-white);
-    width: 100%;
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-}
-
-main .recent-activity:hover {
-    box-shadow: none;
-}
-
-main .recent-activity table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-main .recent-activity table th,
-main .recent-activity table td {
-    height: 2.8rem;
-    border-bottom: 1px solid var(--color-light);
-    color: var(--color-dark-variant);
-    padding: 0.5rem; /* Adjust padding for table cells */
-}
-
-main .recent-activity table tbody tr:last-child td {
-    border: none;
-}
-
-main .recent-activity a,
-main .recent-activity button {
-    text-align: center;
-    display: block;
-    margin: 1rem auto;
-}
-
-main .recent-activity a {
-    color: var(--color-primary);
-}
-
-main .recent-activity button {
-    color: var(--color-white);
-}
-
-/* Style for the options button (three dots) */
+/* ALL REMINDER Style for the options button (three dots) */
 .recent-activity .dropdown {
     position: relative;
     display: inline-block;
