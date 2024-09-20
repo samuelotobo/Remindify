@@ -459,9 +459,20 @@ button:hover {
                         </div>
                     </div>
                 </div>";
+            }
+        } else {
+            echo "<p>No groups available.</p>";
+        }
+        ?>
+    </div>
+</div>
 
+<<<<<<< HEAD
                 
 ////blagfg
+=======
+
+>>>>>>> fe344d046a7784ec7ae32a41ef397c117e989a3d
 
     <!-- Modals -->
     <div id="modal-container">
@@ -508,14 +519,6 @@ button:hover {
             </div>
         </div>
     </div>
-            }
-        } else {
-            echo "<p>No groups available.</p>";
-        }
-        ?>
-    </div>
-</div>
-
 
         </main>
 

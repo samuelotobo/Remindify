@@ -146,7 +146,7 @@ transition: all .2s ease-in-out;
   cursor: pointer;
 }
 .month-list > div > div:hover {
-  background-color:var(--light-btn);
+  background-color:var(--color-dark);
   color: var(--dark-text);
   transform: scale(0.9);
   transition: all 0.2s ease-in-out;
