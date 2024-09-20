@@ -197,12 +197,6 @@ aside .sidebar a span{
     font-size: 1.6rem;
     transition: all 300ms ease;
 }
-/* 
-aside .sidebar a:last-child{
-    position: absolute;
-    bottom: 2rem;
-    width: 100%;
-} */
 
 aside .sidebar a.active{
     background: var(--color-light);
@@ -251,57 +245,10 @@ aside .sidebar .bottom-buttons .red{
     background-color: transparent;
 }
 
-/* aside .sidebar .form button{
-    display: flex;
-    color: var(--color-info-dark);
-    margin-left: 2rem;
-    gap: 1rem;
-    align-items: center;
-    position: relative;
-    height: 3.7rem;
-    transition: all 300ms ease;
-} */
 
 aside .sidebar .bottom-buttons .red:hover{
     color: var(--color-primary);
 }
-/* 
-aside .sidebar .bottom-buttons button{
-    display: flex;
-    color: var(--color-info-dark);
-    margin-left: 2rem;
-    gap: 1rem;
-    align-items: center;
-    position: relative;
-    height: 3.7rem;
-    transition: all 300ms ease;
-} */
-
-
-/* aside .sidebar .bottom-buttons a {
-    display: flex;
-    color: var(--color-info-dark);
-    margin-left: 2rem;
-    gap: 1rem;
-    align-items: center;
-    position: relative;
-    height: 3.7rem;
-    transition: all 300ms ease;
-} */
-
-/* aside .sidebar .bottom-buttons a span {
-    font-size: 1.6rem;
-    transition: all 300ms ease;
-}
-
-aside .sidebar .bottom-buttons a:hover {
-    color: var(--color-primary);
-}
-
-aside .sidebar .bottom-buttons a:hover span {
-    margin-left: 1rem;
-} */
-
 
 /* ------------------ MAIN ------------------ */
 main{
