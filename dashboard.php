@@ -120,22 +120,22 @@ if (!isset($_SESSION['email'])) {
             <div class="date">
                 <span id="current-date"></span>
             </div>
-            <section class="reminder-section">
-                <h2 class="slogan">Reminders for all, anytime, anywhere!</h2>
-                <p class="subline">Never forget a thing with Our app by your side!</p>
-                <div class="create-group">
-    <form id="create-group-form">
-        <input type="text" id="group-name" placeholder="Enter group name" required>
-        <button type="submit" id="create-group-btn">Create Group</button>
-    </form>
-</div>
+            <section class="reminder-section"> 
+        <h2 class="slogan">Reminders for all, anytime, anywhere!</h2>
+        <p class="subline">Never forget a thing with Our app by your side!</p>
 
+        <div class="create-group">
+            <form id="create-group-form">
+                <input type="text" id="group-name" placeholder="Enter group name" required>
+                <button type="submit" id="create-group-btn" class="group-btn">Create Group</button>
+            </form>
+        </div>
 
-                <div class="join-group">
-                    <input type="text" placeholder="Enter a code or link" class="input-code">
-                    <button class="join-btn">Join</button>
-                </div>
-            </section>
+        <div class="join-group">
+            <input type="text" placeholder="Enter a code or link" class="input-code">
+            <button class="join-btn">Join</button>
+        </div>
+    </section>
 
             <!-- --------------------END OF INSIGHTS------------------ -->
             
