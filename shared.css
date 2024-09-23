@@ -1,47 +1,46 @@
+
+.container {
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto 23rem;
+    height: 100vh; /* Set height to 100vh */
+}
+
 /* Shared Groups Container */
 .wrapper {
-    height: 100vh;
+    height: 75vh; /* Full height */
+    overflow-y: auto; /* Enable scrolling only for the groups wrapper */
     display: flex;
     justify-content: center;
-    align-items: center;
-    overflow-y: auto;
+    align-items: flex-start; /* Align items to the top */
 }
 
 .groups-container {
-    margin: 2rem auto;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Allow it to grow vertically */
-    max-height: 100%; /* Constrain within wrapper */
+    margin-top: 0.5rem;
+    width: 100%; /* Full width */
+    padding: 1rem;
+    box-sizing: border-box; /* Include padding in total width */
 }
 
 .groups-list {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    max-height: 100%;
-    flex-direction: column-reverse;
-    overflow-y: auto; /* Enable scrolling for the list */
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+    justify-content: space-between; /* Space between items */
 }
 
 .group-item {
     background-color: var(--color-white);
     border-radius: 8px;
     box-shadow: var(--box-shadow);
-    width: 300px;
+    width: calc(33.333% - 1rem); /* Fit 3 items with space */
+    margin: 0.5rem; /* Add some margin between items */
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative;
     transition: transform 0.3s;
-}
-
-/* Fit 3 items in the container */
-.groups-list .group-item:nth-child(n+4) {
-    display: none;
 }
 
 /* Hover effect for the group item */
@@ -110,7 +109,6 @@ footer {
 .dropdown-content button:hover {
     background-color: var(--color-light);
 }
-
 /* Modal Styles */
 .modal {
     display: none;

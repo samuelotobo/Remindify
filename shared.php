@@ -112,6 +112,8 @@ if (!isset($_SESSION['email'])) {
             <div class="date">
                 <span id="current-date"></span>
             </div>
+<div class="wrapper">
+
 
             <div class="groups-container">
     <div class="groups-list">
@@ -203,7 +205,7 @@ if ($result->num_rows > 0) {
         ?>
     </div>
 </div>
-
+</div>
 </main>
 
         <!-- ============================ END OF MAIN===================== -->
