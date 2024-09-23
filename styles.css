@@ -270,7 +270,6 @@ main .date #current-date {
 
 /* ==================== Recent Activities =================== */
 main .recent-activity-wrapper {
-    padding: 2rem; /* Add padding around the wrapper */
     background: var(--color-background); /* Assuming a background color variable */
     border-radius: var(--card-border-radius); /* Use the same border radius as the table */
 }
@@ -328,7 +327,7 @@ main .recent-activity button {
 }
 
 main .recent-activity button:hover {
-    background: var(--color-dark-variant); /* Change background on hover */
+    background: var(--color-danger); /* Change background on hover */
 }
 
 /* =========================RIGHT======================== */
