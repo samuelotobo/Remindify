@@ -270,8 +270,10 @@ main .date #current-date {
 
 /* ==================== Recent Activities =================== */
 main .recent-activity-wrapper {
-    background: var(--color-background); /* Assuming a background color variable */
-    border-radius: var(--card-border-radius); /* Use the same border radius as the table */
+    /* background: var(--color-background);  */
+    border-radius: var(--card-border-radius);
+    overflow: auto;
+    height: 70vh; /* Use the same border radius as the table */
 }
 
 main .recent-activity {
@@ -880,8 +882,8 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* gap: 0.5rem;
-    margin-bottom: 1.5rem; */
+    gap: 0.5rem;
+    /* margin-bottom: 1.5rem;  */
 }
 
 /* #create-group-form {
