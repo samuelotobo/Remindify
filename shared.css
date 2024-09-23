@@ -1,21 +1,31 @@
 /* Shared Groups Container */
+.wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
 .groups-container {
     margin: 2rem auto;
     width: 90%;
     display: flex;
-    flex-direction: column; /* To stack the header and the list */
+    flex-direction: column;
+    height: 100%; /* Allow it to grow vertically */
+    max-height: 100%; /* Constrain within wrapper */
 }
 
-/* Groups List */
 .groups-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1.5rem;
-    flex-direction: column-reverse; /* Most recent first */
+    max-height: 100%;
+    flex-direction: column-reverse;
+    overflow-y: auto; /* Enable scrolling for the list */
 }
 
-/* Each group item styled as a card */
 .group-item {
     background-color: var(--color-white);
     border-radius: 8px;
@@ -27,6 +37,11 @@
     justify-content: space-between;
     position: relative;
     transition: transform 0.3s;
+}
+
+/* Fit 3 items in the container */
+.groups-list .group-item:nth-child(n+4) {
+    display: none;
 }
 
 /* Hover effect for the group item */
