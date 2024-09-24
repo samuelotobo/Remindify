@@ -8,7 +8,7 @@
   
 }
 .calendar {
-  height: 610px;
+  height: 580px;
   width: max-content;
   background-color: var(--color-white);
   border-radius: 25px;
@@ -120,14 +120,15 @@ transition: all .2s ease-in-out;
 }
 .calendar-days div.current-date {
   color: var(--dark-text);
-  background-color: var(--light-btn);
+  background-color: var(--color-danger);
   border-radius: 20%;
 }
 .month-list {
+  margin-top: 10px;
   position: relative;
   left: 0;
   top: -50px;
-  background-color: #ebebeb;
+  background-color: var(--color-light);
   color: var(--light-text);
   display: grid;
   grid-template-columns: repeat(3, auto);
@@ -146,7 +147,7 @@ transition: all .2s ease-in-out;
   cursor: pointer;
 }
 .month-list > div > div:hover {
-  background-color:var(--light-btn);
+  background-color:var(--color-danger);
   color: var(--dark-text);
   transform: scale(0.9);
   transition: all 0.2s ease-in-out;

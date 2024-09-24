@@ -44,274 +44,8 @@ if (!isset($_SESSION['email'])) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
     rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-<style>/* Basic Modal Styles */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
+    <link rel="stylesheet" href="shared.css">
 
-.plan {
-  padding: 10px;
-  background-color: var(--c-white);
-  color: var(--c-del-rio);
-  max-width: 400px;
-  margin: 10% auto;
-  border-radius: 16px;
-  box-shadow: 0 30px 30px -25px rgba(65, 51, 183, 0.25);
-}
-
-.plan .inner {
-  padding: 20px;
-  padding-top: 40px;
-  background-color: var(--c-fair-pink);
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-}
-
-.plan .title {
-  font-weight: 600;
-  font-size: 1.5rem;
-  color: var(--c-coffee);
-  margin-bottom: 0.75rem;
-}
-
-.plan .info {
-  color: var(--c-charcoal);
-  margin-bottom: 1rem;
-}
-
-.plan .features {
-  display: flex;
-  flex-direction: column;
-}
-
-.plan .features li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.plan .features .icon {
-  background-color: var(--c-java);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--c-white);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-}
-
-.plan button {
-  font: inherit;
-  background-color: var(--c-indigo);
-  border-radius: 6px;
-  color: var(--c-white);
-  font-weight: 500;
-  font-size: 1.125rem;
-  width: 100%;
-  border: 0;
-  padding: 1em;
-  margin-top: 1.25rem;
-  cursor: pointer;
-}
-
-.plan button:hover,
-.plan button:focus {
-  background-color: var(--c-governor);
-}
-/* Container for the entire groups list */
-.container {
-    margin: 2rem auto;
-    width: 90%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-}
-
-/* Each group item should be smaller and aligned side by side */
-.group-item {
-    background-color: var(--color-white);
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Smaller size for the group containers */
-    margin: 1rem;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-}
-
-header h1 {
-    font-size: 1.4rem;
-    color: var(--color-dark);
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.reminder h2 {
-    font-size: 1.2rem;
-    color: var(--color-info-dark);
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-footer {
-    position: relative;
-    text-align: right;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    background: none;
-    border: none;
-    color: var(--color-dark-variant);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: var(--color-white);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: var(--border-radius-1);
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    display: block;
-    color: var(--color-info-dark);
-    padding: 12px 16px;
-    text-decoration: none;
-    border-radius: var(--border-radius-1);
-    transition: background 0.3s ease;
-}
-
-.dropdown-content a:hover {
-    background-color: var(--color-light);
-}
-
-/* Modal styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    overflow: auto;
-}
-
-.plan {
-    background-color: var(--c-white);
-    color: var(--c-del-rio);
-    max-width: 400px;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 30px 30px -25px rgba(65, 51, 183, 0.25);
-}
-
-.inner {
-    padding: 20px;
-    background-color: var(--c-fair-pink);
-    border-radius: 12px;
-}
-
-.title {
-    font-size: 1.5rem;
-    color: var(--c-coffee);
-    margin-bottom: 1rem;
-}
-
-.features li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.icon {
-    margin-right: 10px;
-    background-color: var(--c-java);
-    color: var(--c-white);
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: var(--c-indigo);
-    color: var(--c-white);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: var(--c-governor);
-}
-
-/* Popup message styles */
-.popup-message {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    animation: fadeInOut 2s ease-in-out forwards;
-}
-
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-</style>
 </head>
 <body>
     <div class="container">
@@ -356,10 +90,6 @@ button:hover {
                     <span class="material-icons-sharp" class="active">delete</span>
                     <h3>Recycle Bin</h3>
                 </a>
-                <!-- <a href="settings.html">
-                    <span class="material-icons-sharp">settings</span>
-                    <h3>Settings</h3>
-                </a> -->
                 <div class="bottom-buttons">
                     <a href="accountsettings.php">
                         <span class="material-icons-sharp">account_circle</span>
@@ -376,37 +106,16 @@ button:hover {
         </aside>
 
         <!-- ----------------end of aside ;))))) ---------------- -->
-
-
-
         <main>
-
-
             <h1>Shared Calendar</h1>
 
             <div class="date">
                 <span id="current-date"></span>
             </div>
+<div class="wrapper">
 
 
-
-            <div class="insights upcoming-event">
-            <div class="middle">
-                <div class="event-details">
-                    <!-- Event Name and Details fetched from reminder pages -->
-                    <h3 id="event-name"></h3>
-                    <p id="event-details"></p>
-                </div>
-                <div class="view-participants">
-                    <button id="view-participants-btn">View Participants</button>
-                </div>
-            </div>
-            <small class="text-muted">Last 24 hours</small>
-        </div>
-
-
-        <div class="container">
-    <h1>Shared Groups</h1>
+            <div class="groups-container">
     <div class="groups-list">
         <?php
         // Fetch all groups
@@ -428,20 +137,15 @@ button:hover {
                     </section>
 
                     <footer>
-                                
-   <div class='dropdown'>
-    <button class='dropbtn'>⋮</button>
-    <div class='dropdown-content'>
-        <button class='add-reminder-btn' data-group-id='$group_id'>Add Reminder</button>
-        <button class='view-participants-btn' data-group-id='$group_id'>View Participants</button>
-        <button class='details-btn' data-group-id='$group_id'>Details</button>
-        <button class='edit-btn' data-group-id='$group_id'>Edit</button>
-        <button class='delete-btn' data-group-id='$group_id'>Delete</button>
-    </div>
-</div>
-
-
-                     </div>
+                        <div class='dropdown'>
+                            <button class='dropbtn'>⋮</button>
+                            <div class='dropdown-content'>
+                                <button class='add-reminder-btn' data-group-id='$group_id'>Add Reminder</button>
+                                <button class='view-participants-btn' data-group-id='$group_id'>View Participants</button>
+                                <button class='details-btn' data-group-id='$group_id'>Details</button>
+                                <button class='edit-btn' data-group-id='$group_id'>Edit</button>
+                                <button class='delete-btn' data-group-id='$group_id'>Delete</button>
+                            </div>
                         </div>
                     </footer>
                 </div>
@@ -463,89 +167,46 @@ button:hover {
         } else {
             echo "<p>No groups available.</p>";
         }
+        // Fetch all groups in descending order (most recent first)
+$sql = "SELECT * FROM groups ORDER BY group_id DESC";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $group_id = htmlspecialchars($row['group_id']);
+        $group_name = htmlspecialchars($row['group_name']);
+        echo "
+        <div class='group-item' data-group-id='$group_id'>
+            <header>
+                <h1>$group_name</h1>
+            </header>
+
+            <section class='reminder'>
+                <h2>Upcoming Event</h2>
+            </section>
+
+            <footer>
+                <div class='dropdown'>
+                    <button class='dropbtn'>⋮</button>
+                    <div class='dropdown-content'>
+                        <button class='add-reminder-btn' data-group-id='$group_id'>Add Reminder</button>
+                        <button class='view-participants-btn' data-group-id='$group_id'>View Participants</button>
+                        <button class='details-btn' data-group-id='$group_id'>Details</button>
+                        <button class='edit-btn' data-group-id='$group_id'>Edit</button>
+                        <button class='delete-btn' data-group-id='$group_id'>Delete</button>
+                    </div>
+                </div>
+            </footer>
+        </div>";
+    }
+} else {
+    echo "<p>No groups available.</p>";
+}
         ?>
     </div>
 </div>
-
-
-
-    <!-- Modals -->
-    <div id="modal-container">
-        <!-- Add Reminder Modal -->
-        <div id="add-reminder-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Add Reminder</h2>
-                <form id="add-reminder-form">
-                    <input type="hidden" id="add-group-id">
-                    <label for="reminder-description">Description:</label
-                    <textarea id="reminder-description" required></textarea>
-                    <label for="reminder-date">Date:</label>
-                    <input type="date" id="reminder-date" required>
-                    <label for="reminder-time">Time:</label>
-                    <input type="time" id="reminder-time" required>
-                    <button type="submit">Add Reminder</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- View Participants Modal -->
-        <div id="view-participants-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Participants</h2>
-                <ul id="participants-list">
-                    <!-- Participants will be dynamically loaded here -->
-                </ul>
-            </div>
-        </div>
-
-        <!-- Edit Group Modal -->
-        <div id="edit-group-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Edit Group</h2>
-                <form id="edit-group-form">
-                    <input type="hidden" id="edit-group-id">
-                    <label for="edit-group-name">Group Name:</label>
-                    <input type="text" id="edit-group-name" required>
-                    <button type="submit">Save Changes</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-        </main>
-
-<!-- Modal Container -->
-<div id="notification-modal" class="modal">
-    <article class="plan card">
-        <div class="inner">
-            <!-- Notification Title and Message -->
-            <h2 class="title" id="notification-title">New Event Notification</h2>
-            <p class="info" id="notification-message">You have been invited to a group event.</p>
-
-            <!-- Group Participants -->
-            <ul class="features" id="participants-list">
-                <li>
-                    <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="none" d="M0 0h24v24H0z" />
-                            <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" fill="currentColor" />
-                        </svg>
-                    </span>
-                    <span>Participant Name</span>
-                </li>
-                <!-- Add more participants dynamically -->
-            </ul>
-
-            <!-- Action Buttons -->
-            <button id="view-details-btn" class="button">View Details</button>
-            <button id="close-btn" class="button">Close</button>
-        </div>
-    </article>
 </div>
-
+</main>
 
         <!-- ============================ END OF MAIN===================== -->
         <div class="right">
@@ -572,7 +233,7 @@ button:hover {
                 <!-- === end of top === -->
         </div>
     </div>
-    <!-- <script src="./dashboard.js"></script> -->
+    <script src="./dashboard.js"></script>
      <script>
     document.addEventListener('DOMContentLoaded', () => {
     // Handle dropdown toggle

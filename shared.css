@@ -1,0 +1,175 @@
+
+.container {
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto 23rem;
+    height: 100vh; /* Set height to 100vh */
+}
+
+/* Shared Groups Container */
+.wrapper {
+    height: 75vh; /* Full height */
+    overflow-y: auto; /* Enable scrolling only for the groups wrapper */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+}
+
+.groups-container {
+    margin-top: 0.5rem;
+    width: 100%; /* Full width */
+    padding: 1rem;
+    box-sizing: border-box; /* Include padding in total width */
+}
+
+.groups-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+    justify-content: space-between; /* Space between items */
+}
+
+.group-item {
+    background-color: var(--color-white);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    width: calc(33.333% - 1rem); /* Fit 3 items with space */
+    margin: 0.5rem; /* Add some margin between items */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s;
+}
+
+/* Hover effect for the group item */
+.group-item:hover {
+    transform: scale(1.05);
+}
+
+/* Group header styling */
+.group-item header h1 {
+    font-size: 1.4rem;
+    color: var(--color-dark);
+    text-align: center;
+}
+
+/* Reminder section styling */
+.group-item .reminder h2 {
+    font-size: 1.2rem;
+    color: var(--color-info-dark);
+    text-align: center;
+}
+
+/* Footer styling */
+footer {
+    text-align: right;
+}
+
+/* Dropdown menu styling */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: var(--color-dark-variant);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--color-white);
+    min-width: 160px;
+    box-shadow: var(--box-shadow);
+    z-index: 1;
+    border-radius: var(--border-radius-1);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    background: none;
+    color: var(--color-dark-variant);
+    padding: 12px 16px;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: var(--color-light);
+}
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: var(--color-white);
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: var(--border-radius-3);
+    width: 80%;
+    max-width: 500px;
+    box-shadow: var(--box-shadow);
+}
+
+.close {
+    color: var(--color-danger);
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--color-primary);
+}
+
+/* Popup message for notifications */
+.popup-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: var(--color-success); /* Green background */
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

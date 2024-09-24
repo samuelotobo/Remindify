@@ -200,7 +200,7 @@ if ($result->num_rows > 0) {
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Location</th>
-                                <th>Actions</th>
+                                <th>Options</th>
                             </tr>
                         </thead>
                         <tbody id="activity-list">
@@ -209,6 +209,7 @@ if ($result->num_rows > 0) {
                     </table>
                     <button id="toggle-button">Show All</button>
                 </div>
+                
             </div>
 
             <!-- Edit Reminder Modal -->
@@ -278,18 +279,23 @@ if ($result->num_rows > 0) {
                                 <td>${reminder.location}</td>
                                 <td>
                                     <div class="dropdown">
-                                        <button class="dropbtn">Actions</button>
-                                        <div class="dropdown-content">
-                                            <a href="#" class="edit-reminder" data-id="${reminder.id}">Edit</a>
-                                            <a href="#" class="delete-reminder" data-id="${reminder.id}">Delete</a>
-                                        </div>
-                                    </div>
+    <button class="dropbtn">⋮</button>
+    <div class="dropdown-content">
+        <a href="#" class="edit-reminder" data-id="${reminder.id}">
+            <span class="material-icons-sharp">edit</span> Edit
+        </a>
+        <a href="#" class="delete-reminder" data-id="${reminder.id}">
+            <span class="material-icons-sharp">delete</span> Delete
+        </a>
+    </div>
+</div>
+
                                 </td>
                             `;
                             tableBody.appendChild(row);
                         });
 
-                        button.textContent = 'Hide All';
+                        button.textContent = 'Show Less';
                     });
             } else {
                 // Hide all reminders
