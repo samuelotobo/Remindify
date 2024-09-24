@@ -167,7 +167,41 @@ if (!isset($_SESSION['email'])) {
         } else {
             echo "<p>No groups available.</p>";
         }
-   
+        // Fetch all groups in descending order (most recent first) gg
+$sql = "SELECT * FROM groups ORDER BY group_id DESC";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $group_id = htmlspecialchars($row['group_id']);
+        $group_name = htmlspecialchars($row['group_name']);
+        echo "
+        <div class='group-item' data-group-id='$group_id'>
+            <header>
+                <h1>$group_name</h1>
+            </header>
+
+            <section class='reminder'>
+                <h2>Upcoming Event</h2>
+            </section>
+
+            <footer>
+                <div class='dropdown'>
+                    <button class='dropbtn'>⋮</button>
+                    <div class='dropdown-content'>
+                        <button class='add-reminder-btn' data-group-id='$group_id'>Add Reminder</button>
+                        <button class='view-participants-btn' data-group-id='$group_id'>View Participants</button>
+                        <button class='details-btn' data-group-id='$group_id'>Details</button>
+                        <button class='edit-btn' data-group-id='$group_id'>Edit</button>
+                        <button class='delete-btn' data-group-id='$group_id'>Delete</button>
+                    </div>
+                </div>
+            </footer>
+        </div>";
+    }
+} else {
+    echo "<p>No groups available.</p>";
+}
         ?>
     </div>
 </div>
