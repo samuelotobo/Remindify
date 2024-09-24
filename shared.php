@@ -206,6 +206,82 @@ if ($result->num_rows > 0) {
     </div>
 </div>
 </div>
+    <!-- Modals -->
+    <div id="modal-container">
+        <!-- Add Reminder Modal -->
+        <div id="add-reminder-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Add Reminder</h2>
+                <form id="add-reminder-form">
+                    <input type="hidden" id="add-group-id">
+                    <label for="reminder-description">Description:</label
+                    <textarea id="reminder-description" required></textarea>
+                    <label for="reminder-date">Date:</label>
+                    <input type="date" id="reminder-date" required>
+                    <label for="reminder-time">Time:</label>
+                    <input type="time" id="reminder-time" required>
+                    <button type="submit">Add Reminder</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- View Participants Modal -->
+        <div id="view-participants-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Participants</h2>
+                <ul id="participants-list">
+                    <!-- Participants will be dynamically loaded here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Edit Group Modal -->
+        <div id="edit-group-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Edit Group</h2>
+                <form id="edit-group-form">
+                    <input type="hidden" id="edit-group-id">
+                    <label for="edit-group-name">Group Name:</label>
+                    <input type="text" id="edit-group-name" required>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        </main>
+
+<!-- Modal Container -->
+<div id="notification-modal" class="modal">
+    <article class="plan card">
+        <div class="inner">
+            <!-- Notification Title and Message -->
+            <h2 class="title" id="notification-title">New Event Notification</h2>
+            <p class="info" id="notification-message">You have been invited to a group event.</p>
+
+            <!-- Group Participants -->
+            <ul class="features" id="participants-list">
+                <li>
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <span>Participant Name</span>
+                </li>
+                <!-- Add more participants dynamically -->
+            </ul>
+
+            <!-- Action Buttons -->
+            <button id="view-details-btn" class="button">View Details</button>
+            <button id="close-btn" class="button">Close</button>
+        </div>
+    </article>
+</div>
 </main>
 
         <!-- ============================ END OF MAIN===================== -->
