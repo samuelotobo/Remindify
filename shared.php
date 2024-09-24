@@ -167,7 +167,7 @@ if (!isset($_SESSION['email'])) {
         } else {
             echo "<p>No groups available.</p>";
         }
-        // Fetch all groups in descending order (most recent first)
+        // Fetch all groups in descending order (most recent first) gg
 $sql = "SELECT * FROM groups ORDER BY group_id DESC";
 $result = $conn->query($sql);
 
