@@ -660,7 +660,7 @@ button:hover {
             .catch(error => console.error('Error fetching participants:', error));
     }
 
-    // Add Reminder Form Submission
+    // Add Reminder Form Submission  for this
     document.addEventListener('DOMContentLoaded', () => {
     // Handle Add Reminder Form Submission
     document.getElementById('add-reminder-form').addEventListener('submit', function(event) {
