@@ -167,41 +167,7 @@ if (!isset($_SESSION['email'])) {
         } else {
             echo "<p>No groups available.</p>";
         }
-        // Fetch all groups in descending order (most recent first) gg
-$sql = "SELECT * FROM groups ORDER BY group_id DESC";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $group_id = htmlspecialchars($row['group_id']);
-        $group_name = htmlspecialchars($row['group_name']);
-        echo "
-        <div class='group-item' data-group-id='$group_id'>
-            <header>
-                <h1>$group_name</h1>
-            </header>
-
-            <section class='reminder'>
-                <h2>Upcoming Event</h2>
-            </section>
-
-            <footer>
-                <div class='dropdown'>
-                    <button class='dropbtn'>⋮</button>
-                    <div class='dropdown-content'>
-                        <button class='add-reminder-btn' data-group-id='$group_id'>Add Reminder</button>
-                        <button class='view-participants-btn' data-group-id='$group_id'>View Participants</button>
-                        <button class='details-btn' data-group-id='$group_id'>Details</button>
-                        <button class='edit-btn' data-group-id='$group_id'>Edit</button>
-                        <button class='delete-btn' data-group-id='$group_id'>Delete</button>
-                    </div>
-                </div>
-            </footer>
-        </div>";
-    }
-} else {
-    echo "<p>No groups available.</p>";
-}
+   
         ?>
     </div>
 </div>
@@ -215,8 +181,8 @@ if ($result->num_rows > 0) {
                 <h2>Add Reminder</h2>
                 <form id="add-reminder-form">
                     <input type="hidden" id="add-group-id">
-                    <label for="reminder-description">Description:</label
-                    <textarea id="reminder-description" required></textarea>
+                    <label for="reminder-description">Description:</label>
+                    <input type="text" id="reminder-description" required></input>
                     <label for="reminder-date">Date:</label>
                     <input type="date" id="reminder-date" required>
                     <label for="reminder-time">Time:</label>
@@ -225,7 +191,7 @@ if ($result->num_rows > 0) {
                 </form>
             </div>
         </div>
-
+       
         <!-- View Participants Modal -->
         <div id="view-participants-modal" class="modal">
             <div class="modal-content">
@@ -364,15 +330,7 @@ if ($result->num_rows > 0) {
         });
     });
 
-    // Handle Delete Group
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const groupId = this.dataset.groupId;
-            if (confirm('Are you sure you want to delete this group?')) {
-                deleteGroup(groupId);
-            }
-        });
-    });
+  
 
     // Close modals on 'x' click
     document.querySelectorAll('.close').forEach(button => {
@@ -396,17 +354,15 @@ if ($result->num_rows > 0) {
             })
             .catch(error => console.error('Error fetching participants:', error));
     }
-
-    // Add Reminder Form Submission  for this
     document.addEventListener('DOMContentLoaded', () => {
     // Handle Add Reminder Form Submission
     document.getElementById('add-reminder-form').addEventListener('submit', function(event) {
         event.preventDefault();
         
-        const groupId = document.getElementById('add-group-id').value;
-        const description = document.getElementById('reminder-description').value;
-        const date = document.getElementById('reminder-date').value;
-        const time = document.getElementById('reminder-time').value;
+        const groupId = document.getElementById('add-group-id').value; // Fetch the group ID
+        const description = document.getElementById('reminder-description').value; // Fetch the description
+        const date = document.getElementById('reminder-date').value; // Fetch the date
+        const time = document.getElementById('reminder-time').value; // Fetch the time
 
         fetch('add_group_reminder.php', {
             method: 'POST',
@@ -421,18 +377,17 @@ if ($result->num_rows > 0) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                closeModal(document.getElementById('add-reminder-modal'));
-                showPopupMessage('Reminder added successfully!');
+                closeModal(document.getElementById('add-reminder-modal')); // Close the modal
+                showPopupMessage('Reminder added successfully!'); // Show success message
                 setTimeout(() => {
                     window.location.reload(); // Refresh the page after a short delay
-                }, 10000); // Show message for 2 seconds
+                }, 2000); // Show message for 2 seconds
             } else {
-                alert('Error adding reminder: ' + data.message);
+                alert('Error adding reminder: ' + data.message); // Show error message
             }
         })
         .catch(error => console.error('Error adding reminder:', error));
     });
-
     // Function to show a popup message
     function showPopupMessage(message) {
         const popup = document.createElement('div');
@@ -452,24 +407,34 @@ if ($result->num_rows > 0) {
 });
 
 
-    // Delete Group
-    function deleteGroup(groupId) {
-        fetch('delete_group.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ group_id: groupId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Group deleted successfully!');
-                location.reload();
-            } else {
-                alert('Error deleting group: ' + data.message);
-            }
-        })
-        .catch(error => console.error('Error deleting group:', error));
-    }
+// Delete Group Function
+function deleteGroup(groupId) {
+    fetch('delete_group.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ group_id: groupId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Group deleted successfully!');
+            location.reload();  // Refresh the page to reflect changes
+        } else {
+            alert('Error deleting group: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error deleting group:', error));
+}
+
+// Handle Delete Group Button Clicks
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const groupId = this.dataset.groupId;
+        if (confirm('Are you sure you want to delete this group?')) {
+            deleteGroup(groupId);
+        }
+    });
+});
 
     // Send Desktop Notification
     function sendDesktopNotification(groupId, description) {
@@ -490,6 +455,34 @@ if ($result->num_rows > 0) {
         .catch(error => console.error('Error sending notifications:', error));
     }
 });
+
+document.getElementById('edit-group-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get form values
+    var groupId = document.getElementById('edit-group-id').value;
+    var groupName = document.getElementById('edit-group-name').value;
+
+    // Create form data
+    var formData = new FormData();
+    formData.append('group_id', groupId);
+    formData.append('group_name', groupName);
+
+    // Send form data via AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update_group.php', true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert('Group updated successfully!');
+            // Optionally refresh the page or close the modal
+        } else {
+            alert('Error updating group.');
+        }
+    };
+    xhr.send(formData);
+});
+
+
 
     </script>
 </body>
