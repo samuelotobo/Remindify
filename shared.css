@@ -109,7 +109,91 @@ footer {
 .dropdown-content button:hover {
     background-color: var(--color-light);
 }
+
 /* Modal Styles */
+#add-reminder-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with transparency */
+    overflow: auto;
+}
+
+#add-reminder-modal .modal-content {
+    background-color: var(--color-white);
+    margin: 10% auto;
+    padding: var(--card-padding); /* Consistent padding */
+    border-radius: var(--card-border-radius);
+    width: 80%;
+    max-width: 500px;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease; /* Smooth transition for hover */
+}
+
+#add-reminder-modal .modal-content:hover {
+    box-shadow: none;
+    transform: translateY(-2px); /* slight elevation effect */
+}
+
+#add-reminder-modal .close {
+    color: var(--color-danger);
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#add-reminder-modal .close:hover {
+    color: var(--color-primary);
+}
+
+/* Form Styles */
+#add-reminder-form .form-group {
+    margin-bottom: 1.2rem; /* Spacing between form elements */
+}
+
+#add-reminder-form .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+#add-reminder-form .form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-light);
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    transition: border-color 0.3s ease; /* Smooth focus effect */
+}
+
+#add-reminder-form .form-group input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+/* Submit Button Styles */
+#add-reminder-form .submit-button {
+    padding: 0.8rem;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    transition: all 300ms ease;
+    text-align: center;
+    display: block;
+    margin: 1rem auto;
+}
+
+#add-reminder-form .submit-button:hover {
+    background: var(--color-danger); /* Change color on hover */
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -158,7 +242,38 @@ footer {
     opacity: 0;
     animation: fadeInOut 2s ease-in-out forwards;
 }
+@media screen and (max-width: 768px) {
+    #add-reminder-modal .modal-content {
+        width: 90%;
+        margin: 15% auto;
+        padding: 1.5rem; /* Adjust padding for smaller screens */
+    }
 
+    #add-reminder-form .form-group input {
+        padding: 0.6rem; /* Adjust padding for smaller input fields */
+    }
+
+    #add-reminder-form .submit-button {
+        padding: 0.6rem; /* Adjust button size for smaller screens */
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #add-reminder-modal .modal-content {
+        width: 95%; /* Wider modal for smaller screens */
+        margin: 20% auto;
+    }
+
+    #add-reminder-form .form-group input {
+        padding: 0.5rem; /* Further reduce padding for very small screens */
+    }
+
+    #add-reminder-form .submit-button {
+        padding: 0.5rem;
+        font-size: 0.8rem; /* Smaller text for the button */
+    }
+}
 /* For tablets and medium screens (768px and above) */
 @media screen and (max-width: 1024px) {
     .container {

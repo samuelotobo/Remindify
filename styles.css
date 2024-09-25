@@ -142,7 +142,6 @@ b{
 
 aside{
     height: 100vh;
-    animation: slideIn 0.5s ease-out forwards;
     /* background: gray; */
 }
 
@@ -191,7 +190,6 @@ aside .sidebar a{
     position: relative;
     height: 3.7rem;
     transition: all 300ms ease;
-    animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 aside .sidebar a span{
@@ -203,7 +201,6 @@ aside .sidebar a.active{
     background: var(--color-light);
     color: var(--color-primary);
     margin-left: 0;
-    animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 aside .sidebar a.active:before{
@@ -245,13 +242,11 @@ aside .sidebar .bottom-buttons {
 aside .sidebar .bottom-buttons .red{
     color: var(--color-danger);
     background-color: transparent;
-    
 }
 
 
 aside .sidebar .bottom-buttons .red:hover{
     color: var(--color-primary);
-    animation: hoverExpand 0.2s ease-in-out forwards;
 }
 
 /* ------------------ MAIN ------------------ */
@@ -336,62 +331,6 @@ main .recent-activity button:hover {
     background: var(--color-danger); /* Change background on hover */
 }
 
-/* For tablets and medium screens (768px and above) */
-@media screen and (max-width: 1024px) {
-    main .recent-activity-wrapper {
-        height: 60vh; /* Reduce height for better fit */
-    }
-
-    main .recent-activity table {
-        padding: 1rem; /* Reduce padding */
-        font-size: 0.9rem; /* Reduce font size slightly */
-    }
-
-    main table tbody td {
-        height: 2.4rem; /* Adjust row height */
-    }
-}
-
-/* For mobile screens (max-width: 768px) */
-@media screen and (max-width: 768px) {
-    main .recent-activity-wrapper {
-        height: auto; /* Auto height for small screens */
-    }
-
-    main .recent-activity table {
-        padding: 0.8rem; /* Further reduce padding */
-        font-size: 0.85rem; /* Adjust font size for mobile */
-    }
-
-    main table tbody td {
-        height: 2.2rem; /* Further adjust row height */
-    }
-
-    main .recent-activity a,
-    main .recent-activity button {
-        width: 100%; /* Full-width button and link */
-        margin: 0.5rem 0; /* Reduce margins */
-    }
-}
-
-/* For very small mobile screens (max-width: 480px) */
-@media screen and (max-width: 480px) {
-    main .recent-activity-wrapper {
-        padding: 0.5rem; /* Add some padding */
-    }
-
-    main .recent-activity table {
-        font-size: 0.75rem; /* Reduce font size further */
-    }
-
-    main table tbody td {
-        height: 2rem; /* Further adjust row height */
-    }
-
-    main .recent-activity button {
-        padding: 0.4rem 0.8rem; /* Adjust button padding */
-    }
-}
 /* =========================RIGHT======================== */
 .right{
    margin-top: 1.4rem; 
@@ -513,38 +452,6 @@ main .recent-activity button:hover {
         width: 94%;
         grid-template-columns: 7rem auto 23rem;
     }
-    /* Keyframes for Sidebar Entry */
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Keyframes for hover effect */
-@keyframes hoverExpand {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.05);
-    }
-}
-
-/* Keyframes for fade-in effect */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
     aside .logo h2{
         display: none;
     }
@@ -553,12 +460,24 @@ main .recent-activity button:hover {
     }
     aside .sidebar a{
         width: 5.6rem;
-        animation: slideIn 0.4s ease-out forwards;
     }
     aside .sidebar a:last-child{
         position: relative;
         margin-top: 1.8rem;
     }
+    main .insights{
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    main .recent-orders{
+        width: 94%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 2rem 0 0 8.8rem;
+    }
+    main .recent-orders table{
+        width: 83vw;
 
     }
     main table thead tr th:last-child,
@@ -569,7 +488,7 @@ main .recent-activity button:hover {
     main table tbody tr ttdh:first-child{
         display: none;
     }
-
+}
 
 /* =============== MEDIA QUERIES=================== */ 
 @media screen and (max-width: 768px){

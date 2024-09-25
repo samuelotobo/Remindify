@@ -174,22 +174,42 @@ if (!isset($_SESSION['email'])) {
     <!-- Modals -->
     <div id="modal-container">
         <!-- Add Reminder Modal -->
-        <div id="add-reminder-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Add Reminder</h2>
-                <form id="add-reminder-form">
-                    <input type="hidden" id="add-group-id">
-                    <label for="reminder-description">Description:</label>
-                    <input type="text" id="reminder-description" required></input>
-                    <label for="reminder-date">Date:</label>
-                    <input type="date" id="reminder-date" required>
-                    <label for="reminder-time">Time:</label>
-                    <input type="time" id="reminder-time" required>
-                    <button type="submit">Add Reminder</button>
-                </form>
+        <!-- Add Reminder Modal -->
+<div id="add-reminder-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span> <!-- Close Button -->
+        <h2>Add Reminder</h2>
+        
+        <!-- Add Reminder Form -->
+        <form id="add-reminder-form">
+            <div class="form-group">
+            <input type="hidden" id="add-group-id" name="group-id">
+
+                <label for="reminder-title">Reminder Title</label>
+                <input type="text" id="reminder-title" name="reminder-title" placeholder="Enter title">
             </div>
-        </div>
+
+            <div class="form-group">
+                <label for="reminder-date">Reminder Date</label>
+                <input type="date" id="reminder-date" name="reminder-date">
+            </div>
+
+            <div class="form-group">
+                <label for="reminder-time">Reminder Time</label>
+                <input type="time" id="reminder-time" name="reminder-time">
+            </div>
+
+            <div class="form-group">
+                <label for="reminder-description">Description</label>
+                <input type="text" id="reminder-description" name="reminder-description" placeholder="Enter description">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">Add Reminder</button>
+        </form>
+    </div>
+</div>
+
        
         <!-- View Participants Modal -->
         <div id="view-participants-modal" class="modal">
@@ -296,7 +316,6 @@ if (!isset($_SESSION['email'])) {
             }
         };
     }
-
     // Function to close modals
     function closeModal(modal) {
         modal.style.display = 'none';
