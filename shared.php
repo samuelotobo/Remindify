@@ -183,7 +183,7 @@ if (!isset($_SESSION['email'])) {
         <!-- Add Reminder Form -->
         <form id="add-reminder-form">
             <div class="form-group">
-            <input type="hidden" id="add-group-id" name="group-id">
+                <input type="hidden" id="add-group-id" name="group-id">
 
                 <label for="reminder-title">Reminder Title</label>
                 <input type="text" id="reminder-title" name="reminder-title" placeholder="Enter title">
@@ -316,6 +316,7 @@ if (!isset($_SESSION['email'])) {
             }
         };
     }
+
     // Function to close modals
     function closeModal(modal) {
         modal.style.display = 'none';
