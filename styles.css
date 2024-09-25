@@ -142,6 +142,7 @@ b{
 
 aside{
     height: 100vh;
+    animation: slideIn 0.5s ease-out forwards;
     /* background: gray; */
 }
 
@@ -190,6 +191,7 @@ aside .sidebar a{
     position: relative;
     height: 3.7rem;
     transition: all 300ms ease;
+    animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 aside .sidebar a span{
@@ -201,6 +203,7 @@ aside .sidebar a.active{
     background: var(--color-light);
     color: var(--color-primary);
     margin-left: 0;
+    animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 aside .sidebar a.active:before{
@@ -242,11 +245,13 @@ aside .sidebar .bottom-buttons {
 aside .sidebar .bottom-buttons .red{
     color: var(--color-danger);
     background-color: transparent;
+    
 }
 
 
 aside .sidebar .bottom-buttons .red:hover{
     color: var(--color-primary);
+    animation: hoverExpand 0.2s ease-in-out forwards;
 }
 
 /* ------------------ MAIN ------------------ */
@@ -508,6 +513,38 @@ main .recent-activity button:hover {
         width: 94%;
         grid-template-columns: 7rem auto 23rem;
     }
+    /* Keyframes for Sidebar Entry */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Keyframes for hover effect */
+@keyframes hoverExpand {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
     aside .logo h2{
         display: none;
     }
@@ -516,24 +553,12 @@ main .recent-activity button:hover {
     }
     aside .sidebar a{
         width: 5.6rem;
+        animation: slideIn 0.4s ease-out forwards;
     }
     aside .sidebar a:last-child{
         position: relative;
         margin-top: 1.8rem;
     }
-    main .insights{
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-    main .recent-orders{
-        width: 94%;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 2rem 0 0 8.8rem;
-    }
-    main .recent-orders table{
-        width: 83vw;
 
     }
     main table thead tr th:last-child,
@@ -544,7 +569,7 @@ main .recent-activity button:hover {
     main table tbody tr ttdh:first-child{
         display: none;
     }
-}
+
 
 /* =============== MEDIA QUERIES=================== */ 
 @media screen and (max-width: 768px){

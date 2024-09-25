@@ -137,8 +137,7 @@ if (!isset($_SESSION['email'])) {
         </div>
     </section>
 
-            <!-- --------------------END OF INSIGHTS------------------ -->
-            
+<!-- reminders to show -->          
                 <div class="recent-activity-wrapper">
         <div class="recent-activity">
             <!-- <h2>Recent Activities</h2> -->
