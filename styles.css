@@ -331,6 +331,62 @@ main .recent-activity button:hover {
     background: var(--color-danger); /* Change background on hover */
 }
 
+/* For tablets and medium screens (768px and above) */
+@media screen and (max-width: 1024px) {
+    main .recent-activity-wrapper {
+        height: 60vh; /* Reduce height for better fit */
+    }
+
+    main .recent-activity table {
+        padding: 1rem; /* Reduce padding */
+        font-size: 0.9rem; /* Reduce font size slightly */
+    }
+
+    main table tbody td {
+        height: 2.4rem; /* Adjust row height */
+    }
+}
+
+/* For mobile screens (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    main .recent-activity-wrapper {
+        height: auto; /* Auto height for small screens */
+    }
+
+    main .recent-activity table {
+        padding: 0.8rem; /* Further reduce padding */
+        font-size: 0.85rem; /* Adjust font size for mobile */
+    }
+
+    main table tbody td {
+        height: 2.2rem; /* Further adjust row height */
+    }
+
+    main .recent-activity a,
+    main .recent-activity button {
+        width: 100%; /* Full-width button and link */
+        margin: 0.5rem 0; /* Reduce margins */
+    }
+}
+
+/* For very small mobile screens (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    main .recent-activity-wrapper {
+        padding: 0.5rem; /* Add some padding */
+    }
+
+    main .recent-activity table {
+        font-size: 0.75rem; /* Reduce font size further */
+    }
+
+    main table tbody td {
+        height: 2rem; /* Further adjust row height */
+    }
+
+    main .recent-activity button {
+        padding: 0.4rem 0.8rem; /* Adjust button padding */
+    }
+}
 /* =========================RIGHT======================== */
 .right{
    margin-top: 1.4rem; 

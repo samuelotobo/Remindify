@@ -159,17 +159,63 @@ footer {
     animation: fadeInOut 2s ease-in-out forwards;
 }
 
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
+/* For tablets and medium screens (768px and above) */
+@media screen and (max-width: 1024px) {
+    .container {
+        grid-template-columns: 12rem auto;
     }
-    10% {
-        opacity: 1;
+
+    .group-item {
+        width: calc(50% - 1rem); /* 2 items per row */
     }
-    90% {
-        opacity: 1;
+}
+
+/* For mobile screens (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Single column layout */
+        height: auto;
     }
-    100% {
-        opacity: 0;
+
+    .wrapper {
+        height: auto; /* Adjust wrapper height */
+    }
+
+    .group-item {
+        width: 100%; /* Full width for each item */
+        margin: 0.5rem 0; /* Adjust margin for full-width items */
+    }
+
+    .modal-content {
+        width: 90%; /* Reduce modal width on mobile */
+        max-width: none;
+    }
+}
+
+/* For very small mobile screens (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 1rem; /* Add padding to container */
+    }
+
+    .group-item header h1 {
+        font-size: 1.2rem; /* Adjust font size */
+    }
+
+    .group-item .reminder h2 {
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    .dropbtn {
+        font-size: 1.2rem; /* Adjust button size */
+    }
+
+    .modal-content {
+        padding: 1.5rem; /* Adjust modal padding */
+    }
+
+    .popup-message {
+        font-size: 14px; /* Reduce popup font size */
+        padding: 8px 16px; /* Adjust padding */
     }
 }
