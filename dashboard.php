@@ -139,8 +139,9 @@ if (!isset($_SESSION['email'])) {
 
 <!-- reminders to show -->          
                 <div class="recent-activity-wrapper">
+                
         <div class="recent-activity">
-            <!-- <h2>Recent Activities</h2> -->
+            <h2>Recent Reminders</h2>
             <table>
                 <thead>
                     <tr>
