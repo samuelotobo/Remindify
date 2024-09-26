@@ -174,8 +174,8 @@ if (!isset($_SESSION['email'])) {
     <!-- Modals -->
     <div id="modal-container">
         <!-- Add Reminder Modal -->
-        <!-- Add Reminder Modal -->
-<div id="add-reminder-modal">
+<!-- Add Reminder Modal -->
+<div id="add-reminder-modal" style="display:none;">
     <div class="modal-content">
         <span class="close">&times;</span> <!-- Close Button -->
         <h2>Add Reminder</h2>
@@ -183,25 +183,25 @@ if (!isset($_SESSION['email'])) {
         <!-- Add Reminder Form -->
         <form id="add-reminder-form">
             <div class="form-group">
-                <input type="hidden" id="add-group-id" name="group-id">
+                <input type="hidden" id="add-group-id" name="group-id"> <!-- Hidden Group ID -->
 
                 <label for="reminder-title">Reminder Title</label>
-                <input type="text" id="reminder-title" name="reminder-title" placeholder="Enter title">
+                <input type="text" id="reminder-title" name="reminder-title" placeholder="Enter title" required>
             </div>
 
             <div class="form-group">
                 <label for="reminder-date">Reminder Date</label>
-                <input type="date" id="reminder-date" name="reminder-date">
+                <input type="date" id="reminder-date" name="reminder-date" required>
             </div>
 
             <div class="form-group">
                 <label for="reminder-time">Reminder Time</label>
-                <input type="time" id="reminder-time" name="reminder-time">
+                <input type="time" id="reminder-time" name="reminder-time" required>
             </div>
 
             <div class="form-group">
                 <label for="reminder-description">Description</label>
-                <input type="text" id="reminder-description" name="reminder-description" placeholder="Enter description">
+                <input type="text" id="reminder-description" name="reminder-description" placeholder="Enter description" required>
             </div>
 
             <!-- Submit Button -->
@@ -209,6 +209,7 @@ if (!isset($_SESSION['email'])) {
         </form>
     </div>
 </div>
+
 
        
         <!-- View Participants Modal -->
@@ -373,16 +374,25 @@ if (!isset($_SESSION['email'])) {
             })
             .catch(error => console.error('Error fetching participants:', error));
     }
+
+
     document.addEventListener('DOMContentLoaded', () => {
     // Handle Add Reminder Form Submission
     document.getElementById('add-reminder-form').addEventListener('submit', function(event) {
         event.preventDefault();
         
-        const groupId = document.getElementById('add-group-id').value; // Fetch the group ID
-        const description = document.getElementById('reminder-description').value; // Fetch the description
-        const date = document.getElementById('reminder-date').value; // Fetch the date
-        const time = document.getElementById('reminder-time').value; // Fetch the time
+        const groupId = document.getElementById('add-group-id').value;  // Fetch the group ID
+        const description = document.getElementById('reminder-description').value;  // Fetch the description
+        const date = document.getElementById('reminder-date').value;  // Fetch the date
+        const time = document.getElementById('reminder-time').value;  // Fetch the time
 
+        // Validate inputs
+        if (!groupId || !description || !date || !time) {
+            alert("All fields are required.");
+            return;
+        }
+
+        // Send data to PHP file using fetch API
         fetch('add_group_reminder.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -390,23 +400,26 @@ if (!isset($_SESSION['email'])) {
                 group_id: groupId,
                 description: description,
                 date: date,
-                time: time,
+                time: time
             })
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data);  // Check response
+
             if (data.success) {
-                closeModal(document.getElementById('add-reminder-modal')); // Close the modal
-                showPopupMessage('Reminder added successfully!'); // Show success message
+                closeModal(document.getElementById('add-reminder-modal'));  // Close the modal
+                showPopupMessage('Reminder added successfully!');  // Show success message
                 setTimeout(() => {
-                    window.location.reload(); // Refresh the page after a short delay
-                }, 2000); // Show message for 2 seconds
+                    window.location.reload();  // Reload the page after 2 seconds
+                }, 2000);
             } else {
-                alert('Error adding reminder: ' + data.message); // Show error message
+                alert('Error adding reminder: ' + data.message);  // Show error
             }
         })
-        .catch(error => console.error('Error adding reminder:', error));
+        .catch(error => console.error('Error:', error));  // Handle errors
     });
+
     // Function to show a popup message
     function showPopupMessage(message) {
         const popup = document.createElement('div');
@@ -415,15 +428,21 @@ if (!isset($_SESSION['email'])) {
         document.body.appendChild(popup);
 
         setTimeout(() => {
-            popup.remove(); // Remove popup after 2 seconds
+            popup.remove();  // Remove popup after 2 seconds
         }, 2000);
     }
-
-    // Close modal function
-    function closeModal(modal) {
-        modal.style.display = 'none';
-    }
 });
+
+
+    // Close Modal Function
+    document.querySelectorAll('.close').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none'; // Close the modal
+        });
+    });
+
+ 
+
 
 
 // Delete Group Function
