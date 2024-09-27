@@ -14,8 +14,6 @@ if ($conn->connect_error) {
 // Get the logged-in user's ID
 $user_id = $_SESSION['user_id'];
 
-
-
 // Fetch user data for display
 $sql = "SELECT first_name, username, email, profile_image FROM users WHERE id = '$user_id'";
 $result = $conn->query($sql);
@@ -33,6 +31,36 @@ if ($result->num_rows > 0) {
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Get group name and user ID from the form
+$groupName = $_POST['group_name'];
+$createdBy = $_SESSION['user_id']; // Assuming you have user session management
+    
+        // Generate a join code
+$joinCode = generateJoinCode();
+    
+        // Prepare SQL to insert group data
+$sql = "INSERT INTO sharedgroups (user_id, group_name, created_by, join_code) VALUES ('$createdBy', '$groupName', '$createdBy', '$joinCode')";
+    
+        // Execute SQL and check for success
+if ($conn->query($sql) === TRUE) {
+            // Group created successfully
+            echo "Group created successfully. Join link: <a href='example.com/join/$joinCode'>example.com/join/$joinCode</a>"; // Output the join link here
+} else {
+            echo "Error: " . $conn->error; // Error if SQL fails
+}
+    }
+
+// Generate a join code
+$joinCode = generateJoinCode();
+echo "Generated join code: $joinCode"; // Debug statement
+if ($conn->query($sql) === TRUE) {
+    echo "Group created successfully. Join link: <a href='example.com/join/$joinCode'>example.com/join/$joinCode</a>";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error; // Display the SQL error
+}
+
 }?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +147,7 @@ if (!isset($_SESSION['email'])) {
     <div class="groups-list">
         <?php
         // Fetch all groups
-        $sql = "SELECT * FROM groups";
+        $sql = "SELECT * FROM sharedgroups";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {

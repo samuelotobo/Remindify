@@ -699,6 +699,11 @@ main .recent-activity button:hover {
 }
 
 .recycle-bin-items {
+    height: 75vh; /* Full height */
+    overflow-y: auto; /* Enable scrolling only for the groups wrapper */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     gap: 1rem;

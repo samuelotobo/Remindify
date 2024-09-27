@@ -30,7 +30,7 @@ if ($conn->connect_error) {
 }
 
 if (isset($_POST['group_name'])) {
-    $stmt = $conn->prepare("INSERT INTO groups (group_name, user_id) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO sharedgroups (group_name, user_id) VALUES (?, ?)");
     $stmt->bind_param("si", $group_name, $user_id); // Corrected binding
 
     if ($stmt->execute()) {

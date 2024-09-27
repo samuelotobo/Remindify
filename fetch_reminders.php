@@ -34,18 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->close();
                 break;
 
-            case 'delete':
-                $id = $_POST['id'];
-
-                $stmt = $conn->prepare("DELETE FROM reminders WHERE id=?");
-                $stmt->bind_param('i', $id);
-                if ($stmt->execute()) {
-                    echo json_encode(["message" => "Reminder deleted successfully!"]);
-                } else {
-                    echo json_encode(["error" => "Failed to delete reminder."]);
-                }
-                $stmt->close();
-                break;
 
             default:
                 echo json_encode(["error" => "Invalid action."]);

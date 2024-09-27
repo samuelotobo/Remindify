@@ -1,9 +1,9 @@
+
 <?php include 'auth.php'; 
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "reminder_app";
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -32,6 +32,13 @@ if ($result->num_rows > 0) {
 } else {
     echo "No user found.";
 }
+
+// Fetch deleted reminders for the logged-in user
+$sql = "SELECT id, description, reminder_date, reminder_time, location, deleted_at 
+        FROM recycle_bin 
+        WHERE user_id IS NULL OR user_id = $user_id";
+
+$result = $conn->query($sql);
 
 ?>
 <!DOCTYPE html>
@@ -123,19 +130,22 @@ if ($result->num_rows > 0) {
                     <button class="empty-bin-btn">Empty Bin</button>
                 </div>
                 <div class="recycle-bin-items">
-                    <!-- Example of a deleted reminder -->
-                    <div class="recycle-item">
-                        <input type="checkbox" class="item-checkbox">
-                        <span class="item-name">Deleted Reminder 1</span>
-                        <span class="item-date">Deleted on: 2024-08-19</span>
-                    </div>
-                    <div class="recycle-item">
-                        <input type="checkbox" class="item-checkbox">
-                        <span class="item-name">Deleted Reminder 2</span>
-                        <span class="item-date">Deleted on: 2024-08-18</span>
-                    </div>
-                    <!-- Additional items -->
-                </div>
+                <?php
+                    if ($result->num_rows > 0) {
+                        // Loop through deleted reminders and display them
+                        while($row = $result->fetch_assoc()) {
+                            echo '<div class="recycle-item">';
+                            echo '<input type="checkbox" class="item-checkbox">';
+                            echo '<span class="item-name">' . htmlspecialchars($row['description']) . '</span>';
+                            echo '<span class="item-date">Deleted on: ' . htmlspecialchars($row['deleted_at']) . '</span>';
+                            echo '<span class="item-location">Location: ' . (!empty($row['location']) ? htmlspecialchars($row['location']) : 'No location') . '</span>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p>No deleted reminders found.</p>';
+                    }
+                    ?>
+</div>
             </div>
         
             <!-- Modal for confirmation prompt -->

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $group_id = $_POST['group_id'];
 
     // Prepare the DELETE query
-    $stmt = $conn->prepare("DELETE FROM groups WHERE group_id = ?");
+    $stmt = $conn->prepare("DELETE FROM sharedgroups WHERE group_id = ?");
     $stmt->bind_param('i', $group_id);
 
     if ($stmt->execute()) {
