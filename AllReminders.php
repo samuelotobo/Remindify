@@ -328,6 +328,32 @@ if ($result->num_rows > 0) {
 
         // Handle delete button click
         $(document).on('click', '.delete-reminder', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+
+            if (confirm('Are you sure you want to delete this reminder?')) {
+                fetch('fetch_reminders.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'action': 'delete',
+                        'id': id,
+                    }),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.message) {
+                        alert(result.message);
+                        location.reload();
+                    } else {
+                        alert(result.error);
+                    }
+                });
+            }
+        });
+
         // Handle edit form submission
         $('#editForm').on('submit', function(e) {
     e.preventDefault();
