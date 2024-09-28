@@ -59,7 +59,7 @@ body{
     font-size: 0.88rem;
     background: var(--color-background);
     user-select: none;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     color: var(--color-dark);
 }
 
@@ -676,7 +676,10 @@ main .recent-activity button:hover {
 }
 
 /* ================== recycle bin ================== */
-.recycle-bin {
+#recycleform{
+    margin-top: 2rem;
+}
+#recycleform .recycle-bin {
     margin-top: 2rem;
     background: var(--color-white);
     padding: var(--card-padding);
@@ -684,13 +687,13 @@ main .recent-activity button:hover {
     box-shadow: var(--box-shadow);
 }
 
-.recycle-bin-options {
+#recycleform .recycle-bin-options {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
 }
 
-.recycle-bin-options button {
+#recycleform .recycle-bin-options button {
     background: var(--color-primary);
     color: var(--color-white);
     padding: 0.8rem;
@@ -699,15 +702,47 @@ main .recent-activity button:hover {
 }
 
 .recycle-bin-items {
-    height: 75vh; /* Full height */
-    overflow-y: auto; /* Enable scrolling only for the groups wrapper */
+    height: 30vh; /* Full height */
+    overflow-y: auto; /* Enable scrolling for overflow */
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: column; /* Stack items vertically */
+    gap: 1rem; /* Space between items */
+    padding: 10px; /* Padding around the container */
+    background-color: var(--color-light); /* Light background color */
+    border: 1px solid #ddd; /* Border around the container */
+    border-radius: 5px; /* Rounded corners */
 }
+
+.recycle-item {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    padding: 10px; /* Space inside each item */
+    background-color: var(--color-white); /* White background for items */
+    border: 1px solid #ddd; /* Border for items */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.recycle-item:hover {
+    background-color: #e1f5fe; /* Highlight background color on hover */
+}
+
+.item-checkbox {
+    margin-right: 10px; /* Space between checkbox and text */
+}
+
+.item-name {
+    font-weight: bold; /* Bold item name */
+    flex-grow: 1; /* Allow item name to take available space */
+}
+
+.item-date,
+.item-location {
+    margin-left: 10px; /* Space between the spans */
+    color: #555; /* Subtle color for additional information */
+    font-size: 0.9em; /* Slightly smaller font for date and location */
+}
+
 
 .recycle-item {
     display: flex;

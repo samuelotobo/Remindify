@@ -11,6 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 // Get the logged-in user's ID
 $user_id = $_SESSION['user_id'];
 
@@ -28,6 +29,7 @@ if ($result->num_rows > 0) {
     echo "No user found.";
 }
 
+
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
@@ -42,7 +44,8 @@ $joinCode = generateJoinCode();
     
         // Prepare SQL to insert group data
 $sql = "INSERT INTO sharedgroups (user_id, group_name, created_by, join_code) VALUES ('$createdBy', '$groupName', '$createdBy', '$joinCode')";
-    
+$stmt = $conn->prepare($sql);
+    $stmt->bind_param("isis", $createdBy, $groupName, $createdBy, $joinCode);   
         // Execute SQL and check for success
 if ($conn->query($sql) === TRUE) {
             // Group created successfully
@@ -51,15 +54,11 @@ if ($conn->query($sql) === TRUE) {
             echo "Error: " . $conn->error; // Error if SQL fails
 }
     }
-
-// Generate a join code
-$joinCode = generateJoinCode();
-echo "Generated join code: $joinCode"; // Debug statement
-if ($conn->query($sql) === TRUE) {
-    echo "Group created successfully. Join link: <a href='example.com/join/$joinCode'>example.com/join/$joinCode</a>";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error; // Display the SQL error
+// Function to generate a join code
+function generateJoinCode() {
+    return substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), 0, 8);
 }
+
 
 }?>
 <!DOCTYPE html>
@@ -238,6 +237,17 @@ if ($conn->query($sql) === TRUE) {
     </div>
 </div>
 
+
+        <!-- Details Modal -->
+<div id="detailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Group Details</h2>
+    <p><strong>Created By:</strong> <span id="created_by"></span></p>
+    <p><strong>Join Code:</strong> <span id="join_code"></span></p>
+    <p><strong>Created At:</strong> <span id="created_at"></span></p>
+  </div>
+</div>
 
        
         <!-- View Participants Modal -->

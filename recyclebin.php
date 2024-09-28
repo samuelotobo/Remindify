@@ -39,6 +39,55 @@ $sql = "SELECT id, description, reminder_date, reminder_time, location, deleted_
         WHERE user_id IS NULL OR user_id = $user_id";
 
 $result = $conn->query($sql);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['restore'])) {
+        $selectedItems = $_POST['selected_items']; // Array of item IDs
+        foreach ($selectedItems as $itemId) {
+            // Fetch the reminder details from recycle_bin
+            $stmtFetch = $conn->prepare("SELECT * FROM recycle_bin WHERE id = ?");
+            $stmtFetch->bind_param('i', $itemId);
+            $stmtFetch->execute();
+            $reminder = $stmtFetch->get_result()->fetch_assoc();
+            $stmtFetch->close();
+
+            if ($reminder) {
+                // Insert the reminder back into sharedgroups
+                $stmtInsert = $conn->prepare("INSERT INTO sharedgroups (id, description, reminder_date, reminder_time, location, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+                $stmtInsert->bind_param('issssi', $reminder['reminder_id'], $reminder['description'], $reminder['reminder_date'], $reminder['reminder_time'], $reminder['location'], $reminder['user_id']);
+                $stmtInsert->execute();
+                $stmtInsert->close();
+
+                // Remove the reminder from recycle_bin
+                $stmtDelete = $conn->prepare("DELETE FROM recycle_bin WHERE id = ?");
+                $stmtDelete->bind_param('i', $itemId);
+                $stmtDelete->execute();
+                $stmtDelete->close();
+            }
+        }
+    }
+
+    if (isset($_POST['delete'])) {
+        $selectedItems = $_POST['selected_items']; // Array of item IDs
+        foreach ($selectedItems as $itemId) {
+            // Permanently delete the reminder from recycle_bin
+            $stmtDelete = $conn->prepare("DELETE FROM recycle_bin WHERE id = ?");
+            $stmtDelete->bind_param('i', $itemId);
+            $stmtDelete->execute();
+            $stmtDelete->close();
+        }
+    }
+
+    if (isset($_POST['empty_bin'])) {
+        // Permanently delete all reminders from recycle_bin
+        $stmtEmptyBin = $conn->prepare("DELETE FROM recycle_bin WHERE user_id = ? OR user_id IS NULL");
+        $stmtEmptyBin->bind_param('i', $user_id);
+        $stmtEmptyBin->execute();
+        $stmtEmptyBin->close();
+    }
+
+    header("Location: recyclebin.php");
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -123,11 +172,12 @@ $result = $conn->query($sql);
                 <span id="current-date"></span>
             </div>
 
-            <div class="recycle-bin">
+            
+            <form id="recycleform" method="POST" action="recyclebin.php">
                 <div class="recycle-bin-options">
-                    <button class="restore-btn">Restore Selected</button>
-                    <button class="delete-btn">Delete Selected</button>
-                    <button class="empty-bin-btn">Empty Bin</button>
+                    <button  type="submit" name="restore" class="restore-btn">Restore Selected</button>
+                    <button  type="submit"  name="delete" class="delete-btn">Delete Selected</button>
+                    <button  type="submit" name="empty_bin"class="empty-bin-btn">Empty Bin</button>
                 </div>
                 <div class="recycle-bin-items">
                 <?php
@@ -137,16 +187,17 @@ $result = $conn->query($sql);
                             echo '<div class="recycle-item">';
                             echo '<input type="checkbox" class="item-checkbox">';
                             echo '<span class="item-name">' . htmlspecialchars($row['description']) . '</span>';
-                            echo '<span class="item-date">Deleted on: ' . htmlspecialchars($row['deleted_at']) . '</span>';
-                            echo '<span class="item-location">Location: ' . (!empty($row['location']) ? htmlspecialchars($row['location']) : 'No location') . '</span>';
+                            echo '<span class="item-date">   Deleted on: ' . htmlspecialchars($row['deleted_at']) . '</span>';
+                            echo '<span class="item-location">   Location: ' . (!empty($row['location']) ? htmlspecialchars($row['location']) : 'No location') . '</span>';
                             echo '</div>';
                         }
                     } else {
                         echo '<p>No deleted reminders found.</p>';
                     }
                     ?>
-</div>
             </div>
+            </form>
+
         
             <!-- Modal for confirmation prompt -->
             <div id="confirmation-modal" class="modal">

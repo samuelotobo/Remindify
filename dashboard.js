@@ -81,37 +81,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // recycle bin js
-
-// Restore and Delete Functionality
 document.querySelector('.restore-btn').addEventListener('click', () => {
     alert('Selected items restored!');
+    document.querySelector('form').submit();
 });
 
 document.querySelector('.delete-btn').addEventListener('click', () => {
     document.getElementById('confirmation-modal').style.display = 'block';
 });
 
-// Confirmation Modal Functionality
 document.querySelector('.confirm-delete').addEventListener('click', () => {
     alert('Items permanently deleted!');
+    document.querySelector('form').submit();
     document.getElementById('confirmation-modal').style.display = 'none';
 });
 
 document.querySelector('.cancel-delete').addEventListener('click', () => {
     document.getElementById('confirmation-modal').style.display = 'none';
 });
-
-document.querySelector('.close-modal').addEventListener('click', () => {
-    document.getElementById('confirmation-modal').style.display = 'none';
-});
-
-// Auto Empty Recycle Bin Settings
-document.getElementById('auto-empty-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const period = document.getElementById('empty-period').value;
-    alert(`Auto empty set to ${period} days!`);
-});
-
 
 // =========== balance ==============
 
