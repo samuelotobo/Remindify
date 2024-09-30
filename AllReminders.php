@@ -328,31 +328,38 @@ if ($result->num_rows > 0) {
 
         // Handle delete button click
         $(document).on('click', '.delete-reminder', function(e) {
-            e.preventDefault();
-            const id = $(this).data('id');
+    e.preventDefault();
+    const id = $(this).data('id');
+    const button = $(this);
 
-            if (confirm('Are you sure you want to delete this reminder?')) {
-                fetch('fetch_reminders.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        'action': 'delete',
-                        'id': id,
-                    }),
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.message) {
-                        alert(result.message);
-                        location.reload();
-                    } else {
-                        alert(result.error);
-                    }
-                });
+    if (confirm('Are you sure you want to delete this reminder?')) {
+        button.prop('disabled', true); // Disable the button
+
+        fetch('delete_reminder.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'action': 'delete',
+                'id': id,
+            }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.message) {
+                alert(result.message);
+                location.reload();
+            } else {
+                alert(result.error);
             }
+        })
+        .finally(() => {
+            button.prop('disabled', false); // Re-enable the button
         });
+    }
+});
+
 
         // Handle edit form submission
         $('#editForm').on('submit', function(e) {

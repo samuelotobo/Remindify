@@ -33,6 +33,7 @@ if ($result->num_rows > 0) {
     echo "No user found.";
 }
 
+
 // Fetch deleted reminders for the logged-in user
 $sql = "SELECT id, description, reminder_date, reminder_time, location, deleted_at 
         FROM recycle_bin 
