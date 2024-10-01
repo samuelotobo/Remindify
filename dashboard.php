@@ -36,6 +36,7 @@ if (!isset($_SESSION['email'])) {
     exit();
 
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

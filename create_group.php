@@ -28,19 +28,30 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-if (isset($_POST['group_name'])) {
-    $stmt = $conn->prepare("INSERT INTO sharedgroups (group_name, user_id) VALUES (?, ?)");
-    $stmt->bind_param("si", $group_name, $user_id); // Corrected binding
-
+// }
+// Handle group creation
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $groupName = $_POST['group_name'];
+    $createdBy = $user_id;
+    
+    // Generate a join code
+    $joinCode = generateJoinCode();
+    
+    // Insert group data
+    $sql = "INSERT INTO sharedgroups (user_id, group_name, created_by, join_code) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isis", $createdBy, $groupName, $createdBy, $joinCode);
+    
     if ($stmt->execute()) {
-        echo "success";
+        echo "Group created successfully. Join link: $joinCode";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $conn->error;
     }
-
-    $stmt->close();
 }
 
+// Function to generate a join code
+function generateJoinCode() {
+    return substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), 0, 8);
+}
 $conn->close();
 ?>

@@ -1,4 +1,5 @@
-<?php include 'auth.php'; 
+<?php
+include 'auth.php';
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,57 +13,36 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Ensure the user is logged in
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit();
+}
+
 // Get the logged-in user's ID
 $user_id = $_SESSION['user_id'];
 
 // Fetch user data for display
-$sql = "SELECT first_name, username, email, profile_image FROM users WHERE id = '$user_id'";
-$result = $conn->query($sql);
+$sql = "SELECT first_name, username, email, profile_image FROM users WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $firstName = htmlspecialchars($row['first_name']); // Fetch the first name
+    $firstName = htmlspecialchars($row['first_name']);
     $username = htmlspecialchars($row['username']);
     $imageData = !empty($row['profile_image']) ? base64_encode($row['profile_image']) : null;
-    $imageSrc = $imageData ? 'data:image/jpeg;base64,' . $imageData : 'default-profile.png'; // Default profile image if none is set
+    $imageSrc = $imageData ? 'data:image/jpeg;base64,' . $imageData : 'default-profile.png';
 } else {
     echo "No user found.";
 }
 
 
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-    exit();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Get group name and user ID from the form
-$groupName = $_POST['group_name'];
-$createdBy = $_SESSION['user_id']; // Assuming you have user session management
-    
-        // Generate a join code
-$joinCode = generateJoinCode();
-    
-        // Prepare SQL to insert group data
-$sql = "INSERT INTO sharedgroups (user_id, group_name, created_by, join_code) VALUES ('$createdBy', '$groupName', '$createdBy', '$joinCode')";
-$stmt = $conn->prepare($sql);
-    $stmt->bind_param("isis", $createdBy, $groupName, $createdBy, $joinCode);   
-        // Execute SQL and check for success
-if ($conn->query($sql) === TRUE) {
-            // Group created successfully
-            echo "Group created successfully. Join link: <a href='example.com/join/$joinCode'>example.com/join/$joinCode</a>"; // Output the join link here
-} else {
-            echo "Error: " . $conn->error; // Error if SQL fails
-}
-    }
-// Function to generate a join code
-function generateJoinCode() {
-    return substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), 0, 8);
-}
-
-
-
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -171,7 +151,7 @@ function generateJoinCode() {
                             <div class='dropdown-content'>
                                 <button class='add-reminder-btn' data-group-id='$group_id'>Add Reminder</button>
                                 <button class='view-participants-btn' data-group-id='$group_id'>View Participants</button>
-                                <button class='details-btn' data-group-id='$group_id'>Details</button>
+                                <button class='details-btn' data-group-id='$group_id'>Reminder Details</button>
                                 <button class='edit-btn' data-group-id='$group_id'>Edit</button>
                                 <button class='delete-btn' data-group-id='$group_id'>Delete</button>
                             </div>
@@ -241,16 +221,24 @@ function generateJoinCode() {
 
 
         <!-- Details Modal -->
-<div id="detailsModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-    <h2>Group Details</h2>
-    <p><strong>Created By:</strong> <span id="created_by"></span></p>
-    <p><strong>Join Code:</strong> <span id="join_code"></span></p>
-    <p><strong>Created At:</strong> <span id="created_at"></span></p>
-  </div>
-</div>
-
+        <div id="details-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Reminder Details</h2>
+                    <form id="editForm">
+                        <input type="hidden" name="id" id="editReminderId">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" id="editDescription" required>
+                        <label for="reminder_date">Date:</label>
+                        <input type="date" name="reminder_date" id="editDate" required>
+                        <label for="reminder_time">Time:</label>
+                        <input type="time" name="reminder_time" id="editTime" required>
+                        <label for="location">Location:</label>
+                        <input type="text" name="location" id="editLocation" required>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
        
         <!-- View Participants Modal -->
         <div id="view-participants-modal" class="modal">
@@ -389,8 +377,6 @@ function generateJoinCode() {
             openModal('edit-group-modal');
         });
     });
-
-  
 
     // Close modals on 'x' click
     document.querySelectorAll('.close').forEach(button => {
