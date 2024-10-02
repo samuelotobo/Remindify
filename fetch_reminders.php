@@ -1,4 +1,5 @@
 <?php
+session_start(); // Start the session to access session variables
 header('Content-Type: application/json');
 
 // Database connection
@@ -11,15 +12,19 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
-}
-else {
+} else {
     // Fetch reminders
     $user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 0;
-    $query = $user_id ? "SELECT * FROM reminders WHERE user_id = ?" : "SELECT id, description, reminder_date, reminder_time, location FROM reminders";
-    $stmt = $conn->prepare($query);
-
+    
+    // Ensure we only fetch reminders for the logged-in user
     if ($user_id) {
+        $query = "SELECT * FROM reminders WHERE user_id = ?";
+        $stmt = $conn->prepare($query);
         $stmt->bind_param('i', $user_id);
+    } else {
+        // Optionally handle the case where the user is not logged in
+        echo json_encode(["error" => "User not logged in."]);
+        exit();
     }
 
     $stmt->execute();

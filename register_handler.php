@@ -32,8 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sssss", $firstname, $lastname, $email, $hashedPassword, $imagePath);
 
             if ($stmt->execute()) {
-                // Registration successful, redirect to the login page
-                header("Location: login.php");
+                // Registration successful, store user ID in the session
+                session_start();
+                $_SESSION['user_id'] = $stmt->insert_id; // Store the newly created user ID in the session
+
+                // Redirect to the dashboard or reminders page
+                header("Location: dashboard.php"); // Change to your dashboard or reminders page
                 exit();
             } else {
                 $error = "Error: " . $stmt->error;
