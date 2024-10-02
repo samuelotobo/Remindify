@@ -40,7 +40,6 @@ if ($result->num_rows > 0) {
 }
 
 
-
 ?>
 
 <!DOCTYPE html>
@@ -190,7 +189,7 @@ if ($result->num_rows > 0) {
         <h2>Add Reminder</h2>
         
         <!-- Add Reminder Form -->
-        <form id="add-reminder-form">
+        <form id="add-reminder-form" action="add_group_reminder.php" method="POST">
             <div class="form-group">
                 <input type="hidden" id="add-group-id" name="group-id"> <!-- Hidden Group ID -->
 
@@ -222,24 +221,27 @@ if ($result->num_rows > 0) {
 
         <!-- Details Modal -->
         <div id="details-modal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Reminder Details</h2>
-                    <form id="editForm">
-                        <input type="hidden" name="id" id="editReminderId">
-                        <label for="description">Description:</label>
-                        <input type="text" name="description" id="editDescription" required>
-                        <label for="reminder_date">Date:</label>
-                        <input type="date" name="reminder_date" id="editDate" required>
-                        <label for="reminder_time">Time:</label>
-                        <input type="time" name="reminder_time" id="editTime" required>
-                        <label for="location">Location:</label>
-                        <input type="text" name="location" id="editLocation" required>
-                        <button type="submit">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-       
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('details-modal').style.display='none'">&times;</span>
+        <h2>Reminder Details</h2>
+        <button id="toggle-button">Show All</button>
+        <table id="reminder-table" style="width: 100%; display: none;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="activity-list">
+                <!-- Dynamic rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
         <!-- View Participants Modal -->
         <div id="view-participants-modal" class="modal">
             <div class="modal-content">
@@ -369,6 +371,17 @@ if ($result->num_rows > 0) {
         });
     });
 
+    document.querySelectorAll('.details-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const groupId = this.dataset.groupId;
+         // Fetch reminder details based on the group ID
+         fetchReminderDetails(groupId);
+
+// Open the Reminder Details modal
+openModal('details-modal');
+});
+});
+
     // Handle Edit Group
     document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -400,51 +413,67 @@ if ($result->num_rows > 0) {
             })
             .catch(error => console.error('Error fetching participants:', error));
     }
-
-
     document.addEventListener('DOMContentLoaded', () => {
+
+
     // Handle Add Reminder Form Submission
-    document.getElementById('add-reminder-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        const groupId = document.getElementById('add-group-id').value;  // Fetch the group ID
-        const description = document.getElementById('reminder-description').value;  // Fetch the description
-        const date = document.getElementById('reminder-date').value;  // Fetch the date
-        const time = document.getElementById('reminder-time').value;  // Fetch the time
+    document.getElementById('add-reminder-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent normal form submission
 
-        // Validate inputs
-        if (!groupId || !description || !date || !time) {
-            alert("All fields are required.");
-            return;
+    // Get form values
+    const groupId = document.getElementById('add-group-id').value;
+    const title = document.getElementById('reminder-title').value;
+    const reminderDate = document.getElementById('reminder-date').value;
+    const reminderTime = document.getElementById('reminder-time').value;
+    const description = document.getElementById('reminder-description').value;
+
+    // Submit form data using fetch
+    fetch('add_group_reminder.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            'group-id': groupId,         // This must match your form input names
+            'reminder-title': title,      // Name in form = Name in body
+            'reminder-date': reminderDate,
+            'reminder-time': reminderTime,
+            'reminder-description': description,
+        }),
+    })
+    .then(response => response.json()) // Expecting a JSON response
+    .then(data => {
+        if (data.success) {
+            console.log('Reminder added successfully');
+            // Optionally, update the UI or handle success here
+        } else {
+            console.error('Error adding reminder:', data.message);
+            // Optionally, show an error message
         }
-
-        // Send data to PHP file using fetch API
-        fetch('add_group_reminder.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                group_id: groupId,
-                description: description,
-                date: date,
-                time: time
-            })
-        })
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Optionally, show an error message
+    });
+});
+// Reminder Details
+// Function to fetch reminder details
+function fetchReminderDetails(groupId) {
+    fetch(`get_group_details.php?group_id=${groupId}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);  // Check response
-
-            if (data.success) {
-                closeModal(document.getElementById('add-reminder-modal'));  // Close the modal
-                showPopupMessage('Reminder added successfully!');  // Show success message
-                setTimeout(() => {
-                    window.location.reload();  // Reload the page after 2 seconds
-                }, 2000);
-            } else {
-                alert('Error adding reminder: ' + data.message);  // Show error
-            }
+            // Populate the modal fields with the fetched data
+            document.getElementById('reminder-title').value = data.title;
+            document.getElementById('reminder-date').value = data.reminder_date;
+            document.getElementById('reminder-time').value = data.reminder_time;
+            document.getElementById('reminder-description').value = data.description;
+            // Set the hidden group ID field
+            document.getElementById('add-group-id').value = groupId;
         })
-        .catch(error => console.error('Error:', error));  // Handle errors
-    });
+        .catch(error => {
+            console.error('Error fetching reminder details:', error);
+        });
+}
 
     // Function to show a popup message
     function showPopupMessage(message) {
@@ -458,18 +487,6 @@ if ($result->num_rows > 0) {
         }, 2000);
     }
 });
-
-
-    // Close Modal Function
-    document.querySelectorAll('.close').forEach(button => {
-        button.addEventListener('click', function() {
-            this.closest('.modal').style.display = 'none'; // Close the modal
-        });
-    });
-
- 
-
-
 
 // Delete Group Function
 function deleteGroup(groupId) {
@@ -545,8 +562,6 @@ document.getElementById('edit-group-form').addEventListener('submit', function(e
     };
     xhr.send(formData);
 });
-
-
 
     </script>
 </body>
