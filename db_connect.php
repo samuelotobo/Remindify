@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; // your MySQL username
 $password = ""; // your MySQL password
-$dbname = "reminder_app"; // your database name
+$dbname = "remindify"; // your database name
 
 // Create a new MySQLi connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -20,7 +20,7 @@ if (empty($group_name)) {
 $servername = "localhost";
 $username = "root"; // Your MySQL username
 $password = ""; // Your MySQL password
-$dbname = "reminder_app";
+$dbname = "remindify";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $joinCode = generateJoinCode();
     
     // Insert group data
-    $sql = "INSERT INTO sharedgroups (user_id, group_name, created_by, join_code) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO shared_groups (user_id, group_name, created_by, join_code) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isis", $createdBy, $groupName, $createdBy, $joinCode);
     

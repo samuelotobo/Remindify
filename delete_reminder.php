@@ -5,7 +5,7 @@ include 'db_connect.php'; // Ensure this file contains your connection logic
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $reminder_id = intval($_POST['id']); // Ensure you are getting an integer ID
+    $reminder_id = ($_POST['id']); // Ensure you are getting an integer ID
 
     // Begin a transaction
     $conn->begin_transaction();
@@ -22,13 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Step 2: Insert reminder details into the recycle_bin
             $stmtInsert = $conn->prepare("INSERT INTO recycle_bin (reminder_id, description, reminder_date, reminder_time, location, user_id, deleted_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
             $stmtInsert->bind_param('issssi', $reminder['id'], $reminder['description'], $reminder['reminder_date'], $reminder['reminder_time'], $reminder['location'], $reminder['user_id']);
-            $stmtInsert->execute();
+            
+            // Execute and check for errors
+            if (!$stmtInsert->execute()) {
+                // Log the error
+                error_log("Insert Error: " . $stmtInsert->error);
+                throw new Exception('Failed to insert into recycle_bin: ' . $stmtInsert->error);
+            }
+
             $stmtInsert->close();
 
             // Step 3: Delete from the reminders table
             $stmtDelete = $conn->prepare("DELETE FROM reminders WHERE id = ?");
             $stmtDelete->bind_param('i', $reminder_id);
-            $stmtDelete->execute();
+            if (!$stmtDelete->execute()) {
+                // Log the error
+                error_log("Delete Error: " . $stmtDelete->error);
+                throw new Exception('Failed to delete from reminders: ' . $stmtDelete->error);
+            }
             $stmtDelete->close();
 
             // Commit the transaction

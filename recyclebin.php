@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "reminder_app";
+$dbname = "remindify";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -39,21 +39,25 @@ $sql = "SELECT id, description, reminder_date, reminder_time, location, deleted_
         FROM recycle_bin 
         WHERE user_id IS NULL OR user_id = $user_id";
 
+
 $result = $conn->query($sql);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['restore'])) {
         $selectedItems = $_POST['selected_items']; // Array of item IDs
         foreach ($selectedItems as $itemId) {
+
             // Fetch the reminder details from recycle_bin
-            $stmtFetch = $conn->prepare("SELECT * FROM recycle_bin WHERE id = ?");
-            $stmtFetch->bind_param('i', $itemId);
-            $stmtFetch->execute();
-            $reminder = $stmtFetch->get_result()->fetch_assoc();
-            $stmtFetch->close();
+            $stmt = $conn->prepare("SELECT id, description, reminder_date, reminder_time, location, deleted_at 
+                         FROM recycle_bin 
+                         WHERE user_id IS NULL OR user_id = ?");
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
 
             if ($reminder) {
                 // Insert the reminder back into sharedgroups
-                $stmtInsert = $conn->prepare("INSERT INTO sharedgroups (id, description, reminder_date, reminder_time, location, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+                $stmtInsert = $conn->prepare("INSERT INTO shared_groups (id, description, reminder_date, reminder_time, location, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
                 $stmtInsert->bind_param('issssi', $reminder['reminder_id'], $reminder['description'], $reminder['reminder_date'], $reminder['reminder_time'], $reminder['location'], $reminder['user_id']);
                 $stmtInsert->execute();
                 $stmtInsert->close();
@@ -186,12 +190,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Loop through deleted reminders and display them
                         while($row = $result->fetch_assoc()) {
                             echo '<div class="recycle-item">';
-                            echo '<input type="checkbox" class="item-checkbox">';
+                            echo '<input type="checkbox" class="item-checkbox" name="selected_items[]" value="' . $row['id'] . '">'; // Set the value to the reminder ID
                             echo '<span class="item-name">' . htmlspecialchars($row['description']) . '</span>';
                             echo '<span class="item-date">   Deleted on: ' . htmlspecialchars($row['deleted_at']) . '</span>';
                             echo '<span class="item-location">   Location: ' . (!empty($row['location']) ? htmlspecialchars($row['location']) : 'No location') . '</span>';
                             echo '</div>';
                         }
+                        
                     } else {
                         echo '<p>No deleted reminders found.</p>';
                     }

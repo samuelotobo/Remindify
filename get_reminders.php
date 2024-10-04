@@ -1,7 +1,7 @@
 <?php
 // Database connection
 $host = 'localhost';
-$dbname = 'reminder_app';
+$dbname = 'remindify';
 $username = 'root';
 $password = '';
 

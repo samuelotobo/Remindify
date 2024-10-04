@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // Step 1: Fetch reminder details from sharedgroups
-        $stmtFetch = $conn->prepare("SELECT * FROM sharedgroups WHERE group_id = ?");
+        $stmtFetch = $conn->prepare("SELECT * FROM shared_groups WHERE group_id = ?");
         $stmtFetch->bind_param('i', $group_id);
         $stmtFetch->execute();
         $result = $stmtFetch->get_result();
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmtInsert->close();
 
             // Step 3: Delete from sharedgroups
-            $stmtDelete = $conn->prepare("DELETE FROM sharedgroups WHERE group_id = ?");
+            $stmtDelete = $conn->prepare("DELETE FROM shared_groups WHERE group_id = ?");
             $stmtDelete->bind_param('i', $group_id);
             $stmtDelete->execute();
             $stmtDelete->close();

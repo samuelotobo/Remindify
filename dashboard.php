@@ -4,7 +4,7 @@ include 'auth.php';
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "reminder_app";
+$dbname = "remindify";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -134,9 +134,10 @@ if (!isset($_SESSION['email'])) {
         </div>
 
         <div class="join-group">
-            <input type="text" placeholder="Enter a code or link" class="input-code">
-            <button class="join-btn">Join</button>
-        </div>
+    <input type="text" id="join-code" placeholder="Enter a code or link" class="input-code">
+    <button id="join-btn" class="join-btn">Join</button>
+</div>
+
     </section>
 
 <!-- reminders to show -->          
@@ -352,6 +353,39 @@ if (!isset($_SESSION['email'])) {
     })
     .catch(error => console.error('Error:', error));
 });
+
+// join-btn
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('join-btn').addEventListener('click', function() {
+        const joinCode = document.getElementById('join-code').value;
+
+        if (joinCode.trim() === '') {
+            alert('Join code cannot be empty');
+            return;
+        }
+
+        // Send join code to PHP using AJAX
+        fetch('join.php?code=' + encodeURIComponent(joinCode), {
+            method: 'GET'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                location.href = 'group_page.php?id=' + data.group_id; // Redirect to the group page
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+
 
 
 </script>

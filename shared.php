@@ -3,7 +3,7 @@ include 'auth.php';
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "reminder_app";
+$dbname = "remindify";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -127,8 +127,11 @@ if ($result->num_rows > 0) {
     <div class="groups-list">
         <?php
         // Fetch all groups
-        $sql = "SELECT * FROM sharedgroups";
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM shared_groups WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $user_id); // Bind user_id parameter
+$stmt->execute();
+$result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {

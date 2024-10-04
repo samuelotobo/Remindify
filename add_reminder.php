@@ -5,7 +5,7 @@ session_start(); // Start the session to access session variables
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "reminder_app";
+$dbname = "remindify";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
