@@ -216,7 +216,7 @@ $result = $stmt->get_result();
             </div>
         
             <!-- Settings for auto empty -->
-            <div class="auto-empty-settings">
+            <!-- <div class="auto-empty-settings">
                 <h2>Auto Empty Recycle Bin</h2>
                 <form id="auto-empty-form">
                     <label for="empty-period">Auto Empty After:</label>
@@ -227,7 +227,7 @@ $result = $stmt->get_result();
                     </select>
                     <button type="submit">Save Settings</button>
                 </form>
-            </div>
+            </div> -->
         </main>
         <!-- ============================ END OF MAIN===================== -->
         <div class="right">

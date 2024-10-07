@@ -693,7 +693,7 @@ main .recent-activity button:hover {
     margin-bottom: 1rem;
 }
 
-#recycleform .recycle-bin-options button {
+#recycleform .recycle-bin-options .empty-bin-btn {
     background: var(--color-primary);
     color: var(--color-white);
     padding: 0.8rem;
@@ -702,7 +702,7 @@ main .recent-activity button:hover {
 }
 
 .recycle-bin-items {
-    height: 30vh; /* Full height */
+    height: 60vh; /* Full height */
     overflow-y: auto; /* Enable scrolling for overflow */
     display: flex;
     flex-direction: column; /* Stack items vertically */
