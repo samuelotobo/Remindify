@@ -28,7 +28,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// }
+
 // Handle group creation
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $groupName = $_POST['group_name'];
@@ -43,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("isis", $createdBy, $groupName, $createdBy, $joinCode);
     
     if ($stmt->execute()) {
-        echo "Group created successfully. Join link: $joinCode";
+        // Construct the join link
+        $joinLink =$joinCode;
+        echo "Group created successfully. Join link:$joinLink";
     } else {
         echo "Error: " . $conn->error;
     }
@@ -53,5 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 function generateJoinCode() {
     return substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), 0, 8);
 }
+
 $conn->close();
 ?>

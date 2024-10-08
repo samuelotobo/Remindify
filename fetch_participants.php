@@ -1,19 +1,28 @@
 <?php
-include 'db_connect.php'; // Ensure you have a connection script
+// Include your DB connection
+include 'db_connect.php';
 
-$group_id = $_GET['group_id'];
+$group_id = isset($_GET['group_id']) ? intval($_GET['group_id']) : 0;
 
-$sql = "SELECT users.username FROM participants JOIN users ON participants.user_id = users.id WHERE participants.group_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $group_id);
-$stmt->execute();
-$result = $stmt->get_result();
+if ($group_id > 0) {
+    $sql = "SELECT p.group_id, u.first_name, u.last_name, u.email
+            FROM participants p
+            JOIN users u ON p.user_id = u.id
+            WHERE p.group_id = ?";
 
-$participants = [];
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $group_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-while($row = $result->fetch_assoc()) {
-    $participants[] = ['username' => $row['username']];
+    $participants = [];
+    while ($row = $result->fetch_assoc()) {
+        $participants[] = $row;
+    }
+
+    echo json_encode($participants);
+} else {
+    echo json_encode([]);
 }
 
-echo json_encode($participants);
 ?>

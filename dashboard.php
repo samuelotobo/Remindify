@@ -354,7 +354,6 @@ if (!isset($_SESSION['email'])) {
     .catch(error => console.error('Error:', error));
 });
 
-// join-btn
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('join-btn').addEventListener('click', function() {
         const joinCode = document.getElementById('join-code').value;
@@ -366,7 +365,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Send join code to PHP using AJAX
         fetch('join.php?code=' + encodeURIComponent(joinCode), {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
         .then(response => {
             if (!response.ok) {
@@ -377,12 +379,15 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.status === 'success') {
                 alert(data.message);
-                location.href = 'group_page.php?id=' + data.group_id; // Redirect to the group page
+                location.href = 'shared.php?id=' + data.group_id; // Redirect to the group page
             } else {
-                alert(data.message);
+                alert(data.message); // Display error message
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
     });
 });
 
