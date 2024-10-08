@@ -17,11 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 
     // Bounce animation for the download button
-    const downloadBtn = document.querySelector('.download-btn');
+    const registerBtn = document.querySelector('.danger-btn');
     setInterval(() => {
-        downloadBtn.classList.add('bounce');
+        registerBtn.classList.add('bounce');
         setTimeout(() => {
-            downloadBtn.classList.remove('bounce');
+            registerBtn.classList.remove('bounce');
         }, 1000);
     }, 3000);
 });

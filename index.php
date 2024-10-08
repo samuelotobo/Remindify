@@ -16,7 +16,7 @@
             <h1>Remindify</h1>
         </div>
         <div class="download-container">
-            <button class="download-btn">Download Now</button>
+        <a href="register.php"><button class="danger-btn">Register Now</button>
         </div>
     </header>
 
@@ -27,7 +27,7 @@
         </div>
         <div class="action-buttons">
             <a href="login.php"><button class="primary-btn">Log In</button></a>
-            <a href="register.php"><button class="danger-btn">Register</button></a>
+            <!-- <button class="-btn">Register</button></a> -->
         </div>
     </main>
     

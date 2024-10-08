@@ -50,7 +50,7 @@ header {
     align-items: center;
 }
 
-.download-btn {
+.danger-btn {
     background-color: var(--color-primary);
     color: white;
     border: none;
@@ -82,7 +82,7 @@ main {
     border-radius: var(--border-radius-3);
     cursor: pointer;
 }
-
+/* 
 .danger-btn {
     background-color: var(--color-danger);
     color: white;
@@ -90,7 +90,7 @@ main {
     border: none;
     border-radius: var(--border-radius-3);
     cursor: pointer;
-}
+} */
 
 /* animations */
 /* Fade in animation for logo and welcome message */
@@ -117,8 +117,7 @@ main {
 }
 
 /* Hover effects for buttons */
-.primary-btn:hover,
-.danger-btn:hover {
+.primary-btn:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
 }
