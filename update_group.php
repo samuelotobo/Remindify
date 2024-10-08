@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $group_name = $_POST['group_name'];
 
     // Prepare and bind
-    $stmt = $conn->prepare("UPDATE groups SET group_name = ? WHERE group_id = ?");
+    $stmt = $conn->prepare("UPDATE shared_groups SET group_name = ? WHERE group_id = ?");
     $stmt->bind_param("si", $group_name, $group_id);
 
     if ($stmt->execute()) {
