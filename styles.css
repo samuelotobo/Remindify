@@ -699,6 +699,10 @@ main .recent-activity button:hover {
     padding: 0.8rem;
     border-radius: var(--border-radius-1);
     cursor: pointer;
+    transition: all 300ms ease;
+}
+#recycleform .recycle-bin-options .empty-bin-btn:hover{
+    background-color: var(--color-danger);
 }
 
 .recycle-bin-items {
