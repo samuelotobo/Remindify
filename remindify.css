@@ -51,7 +51,7 @@ header {
 }
 
 .danger-btn {
-    background-color: var(--color-primary);
+    background-color: var(--color-danger);
     color: white;
     border: none;
     padding: 0.8rem 2rem;
