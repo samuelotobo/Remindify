@@ -694,7 +694,7 @@ main .recent-activity button:hover {
 }
 
 #recycleform .recycle-bin-options .empty-bin-btn {
-    background: var(--color-primary);
+    background: var(--color-danger);
     color: var(--color-white);
     padding: 0.8rem;
     border-radius: var(--border-radius-1);
@@ -702,7 +702,7 @@ main .recent-activity button:hover {
     transition: all 300ms ease;
 }
 #recycleform .recycle-bin-options .empty-bin-btn:hover{
-    background-color: var(--color-danger);
+    background-color: var(--color-primary);
 }
 
 .recycle-bin-items {
@@ -794,7 +794,7 @@ main .recent-activity button:hover {
     font-weight: bold;
     cursor: pointer;
 }
-
+/* 
 .auto-empty-settings {
     margin-top: 2rem;
     background: var(--color-white);
@@ -838,7 +838,7 @@ main .recent-activity button:hover {
 
 .auto-empty-settings button:hover{
     background: var(--color-danger);
-}
+} */
 
 
 /* ======================= BALANCE =================== */

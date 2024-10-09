@@ -55,6 +55,8 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 
+
+
             if ($reminder) {
                 // Insert the reminder back into sharedgroups
                 $stmtInsert = $conn->prepare("INSERT INTO shared_groups (id, description, reminder_date, reminder_time, location, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
@@ -180,8 +182,8 @@ $result = $stmt->get_result();
             
             <form id="recycleform" method="POST" action="recyclebin.php">
                 <div class="recycle-bin-options">
-                    <button  type="submit" name="restore" class="restore-btn">Restore Selected</button>
-                    <button  type="submit"  name="delete" class="delete-btn">Delete Selected</button>
+                    <!-- <button  type="submit" name="restore" class="restore-btn">Restore Selected</button>
+                    <button  type="submit"  name="delete" class="delete-btn">Delete Selected</button> -->
                     <button  type="submit" name="empty_bin"class="empty-bin-btn">Empty Bin</button>
                 </div>
                 <div class="recycle-bin-items">
@@ -198,7 +200,7 @@ $result = $stmt->get_result();
                         }
                         
                     } else {
-                        echo '<p>No deleted reminders found.</p>';
+                        echo '<p>No deleted items found.</p>';
                     }
                     ?>
             </div>
