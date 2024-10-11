@@ -77,10 +77,10 @@ if ($result->num_rows > 0) {
                     <span class="material-icons-sharp">calendar_month</span>
                     <h3>Calendar</h3>
                 </a>
-                <a href="balance.php">
+                <!-- <a href="balance.php">
                     <span class="material-icons-sharp">savings</span>
                     <h3>My Wallet</h3>
-                </a>
+                </a> -->
                 <!-- <a href="completed.php">
                     <span class="material-icons-sharp">assignment_turned_in</span>
                     <h3>Completed</h3>
@@ -108,50 +108,88 @@ if ($result->num_rows > 0) {
         <!-- ----------------end of aside ;))))) ---------------- -->
 
         <main>
-            <h1>Calendar</h1>
+    <h1>Calendar</h1>
 
-            <div class="date">
-                <span id="current-date"></span>
+    <div class="date">
+        <span id="current-date"></span>
+    </div>
+    
+    <div class="calendar">
+        <div class="calendar-header">
+            <span class="month-picker" id="month-picker"> May </span>
+            <div class="year-picker" id="year-picker">
+                <span class="year-change" id="pre-year"><pre><</pre></span>
+                <span id="year">2020 </span>
+                <span class="year-change" id="next-year"><pre>></pre></span>
             </div>
-            <div class="calendar">
-                <div class="calendar-header">
-                  <span class="month-picker" id="month-picker"> May </span>
-                  <div class="year-picker" id="year-picker">
-                    <span class="year-change" id="pre-year">
-                      <pre><</pre>
-                    </span>
-                    <span id="year">2020 </span>
-                    <span class="year-change" id="next-year">
-                      <pre>></pre>
-                    </span>
-                  </div>
-                </div>
-         
-                <div class="calendar-body">
-                  <div class="calendar-week-days">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                  </div>
-                  <div class="calendar-days">
-                  </div>
-                </div>
-                <div class="calendar-footer">
-                </div>
-                <div class="date-time-formate">
-                  <div class="day-text-formate">TODAY</div>
-                  <div class="date-time-value">
-                    <div class="time-formate">02:51:20</div>
-                    <div class="date-formate">23 - july - 2022</div>
-                  </div>
-                </div>
-                <div class="month-list"></div>
-              </div>
-        </main>
+        </div>
+
+        <div class="calendar-body">
+            <div class="calendar-week-days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="calendar-days">
+                <!-- Calendar days will be generated here -->
+            </div>
+        </div>
+        <div class="calendar-footer"></div>
+        <div class="date-time-formate">
+            <div class="day-text-formate">TODAY</div>
+            <div class="date-time-value">
+                <div class="time-formate">02:51:20</div>
+                <div class="date-formate">23 - July - 2022</div>
+            </div>
+        </div>
+        <div class="month-list"></div>
+    </div>
+
+    <div class="main-content"> <!-- New div for layout -->
+        <section id="notes-section">
+            <h2>Week <span id="week-number">n</span></h2> <!-- Centered heading -->
+            <div id="weekly-notes">
+                <form id="notes-form">
+                    <div class="note-day">
+                        <label for="monday">MONDAY <span class="day-date" id="monday-date"></span></label>
+                        <textarea id="monday" name="monday"></textarea>
+                    </div>
+                    <div class="note-day">
+                        <label for="tuesday">TUESDAY <span class="day-date" id="tuesday-date"></span></label>
+                        <textarea id="tuesday" name="tuesday"></textarea>
+                    </div>
+                    <div class="note-day">
+                        <label for="wednesday">WEDNESDAY <span class="day-date" id="wednesday-date"></span></label>
+                        <textarea id="wednesday" name="wednesday"></textarea>
+                    </div>
+                    <div class="note-day">
+                        <label for="thursday">THURSDAY <span class="day-date" id="thursday-date"></span></label>
+                        <textarea id="thursday" name="thursday"></textarea>
+                    </div>
+                    <div class="note-day">
+                        <label for="friday">FRIDAY <span class="day-date" id="friday-date"></span></label>
+                        <textarea id="friday" name="friday"></textarea>
+                    </div>
+                    <div class="note-day">
+                        <label for="saturday">SATURDAY <span class="day-date" id="saturday-date"></span></label>
+                        <textarea id="saturday" name="saturday"></textarea>
+                    </div>
+                    <div class="note-day">
+                        <label for="sunday">SUNDAY <span class="day-date" id="sunday-date"></span></label>
+                        <textarea id="sunday" name="sunday"></textarea>
+                    </div>
+                    <input type="hidden" id="week_start_date" name="week_start_date">
+                    <button type="submit">Save Notes</button>
+                </form>
+            </div>
+        </section>
+    </div> <!-- End of main-content -->
+</main>
+
         <!-- ============================ END OF MAIN===================== -->
         <div class="right">
             <div class="top">
@@ -175,9 +213,11 @@ if ($result->num_rows > 0) {
                 </div>
             </div>
                 <!-- === end of top === -->
+      
         </div>
     </div>
     <script src="./calendar.js"></script>
     <script src="dashboard.js"></script>
+    <script src="notes.js"></script>
 </body>
 </html>

@@ -82,10 +82,10 @@ if (!isset($_SESSION['email'])) {
                     <span class="material-icons-sharp">calendar_month</span>
                     <h3>Calendar</h3>
                 </a>
-                <a href="balance.php">
+                <!-- <a href="balance.php">
                     <span class="material-icons-sharp">savings</span>
                     <h3>My Wallet</h3>
-                </a>
+                </a> -->
                 <!-- <a href="completed.php">
                     <span class="material-icons-sharp">assignment_turned_in</span>
                     <h3>Completed</h3>

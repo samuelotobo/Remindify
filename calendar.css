@@ -7,7 +7,99 @@
   --box-shadow: 0 2rem 3rem var(--color-light);
   
 }
-.calendar {
+
+.main-content {
+  display: flex;
+  justify-content: space-between; /* Space them evenly */
+  gap: 20px; /* Space between Calendar and Notes */
+  align-items: stretch; /* Ensures equal height */
+}
+
+/* Ensure both sections have the same width */
+.calendar, #notes-section {
+  flex: 1; /* Makes both sections equal width */
+  min-width: 300px; /* Minimum width for responsiveness */
+  max-width: 45%; /* Adjust the max-width as needed */
+  height: 580px; /* Fixed height for both sections */
+  background-color: var(--color-white);
+  border-radius: 25px;
+  overflow: hidden;
+  padding: 30px 50px; /* Adjusted padding */
+  box-shadow: var(--box-shadow);
+  box-sizing: border-box; /* Includes padding and border in total width */
+}
+
+/* Ensures the header of both sections is styled similarly */
+.calendar-header, #notes-section h2 {
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+/* Style each day in Notes */
+.note-day {
+  margin-bottom: 15px;
+}
+
+.note-day label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.note-day textarea {
+  width: 100%; /* Full width of the container */
+  height: 80px; /* Set a fixed height for consistency */
+  padding: 10px;
+  border: 1px solid var(--color-light);
+  border-radius: 5px;
+  resize: vertical; /* Allow resizing vertically */
+  box-sizing: border-box; /* Include padding and border in width */
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-dark);
+  background-color: var(--color-white);
+}
+
+/* Center the Save Notes button */
+#notes-form button {
+  display: block;
+  margin: 20px auto 0; /* Center horizontally with margin */
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#notes-form button:hover {
+  background-color: var(--color-secondary);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 767px) { /* Responsive design for smaller screens */
+  .main-content {
+      flex-direction: column; /* Stack vertically */
+  }
+
+  .calendar, #notes-section {
+      flex: 1 1 100%; /* Full width */
+      height: auto; /* Adjust height based on content */
+  }
+}
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between Calendar and Notes */
+  align-items: flex-start;
+  justify-content: center; /* Center align if space permits */
+}
+.calendar, #notes-section {
+  flex: 1 1 45%; /* Adjust the width as needed */
+  box-sizing: border-box;
   height: 580px;
   width: max-content;
   background-color: var(--color-white);
@@ -267,5 +359,98 @@ transition: all .2s ease-in-out;
   .month-list>div{
 
     margin: 5px 0px;
+  }
+}
+
+#notes-section {
+  flex: 1 1 45%; /* Similar to .calendar */
+  height: 580px; /* Match Calendar height */
+  background-color: var(--color-white);
+  border-radius: 25px;
+  overflow: hidden;
+  padding: 30px 50px 0px 50px;
+  box-shadow: var(--box-shadow);
+  box-sizing: border-box;
+}
+
+#notes-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--color-dark);
+}
+
+/* Style each day in Notes */
+.note-day {
+  margin-bottom: 15px;
+}
+
+.note-day label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.note-day textarea {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid var(--color-light);
+  border-radius: 5px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-dark);
+  background-color: var(--color-white);
+}
+
+/* Center the Save Notes button */
+#notes-form button {
+  display: block;
+  margin: 20px auto 0; /* Center horizontally with margin */
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#notes-form button:hover {
+  background-color: var(--color-secondary);
+}
+
+/* Success Message Styling */
+#success-message {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #d4edda; /* Light green background */
+  color: #155724; /* Dark green text */
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Align Notes next to Calendar */
+@media (min-width: 768px) { /* Adjust breakpoint as needed */
+  .main-content {
+      flex-direction: row;
+  }
+}
+
+@media (max-width: 767px) { /* Responsive design for smaller screens */
+  .main-content {
+      flex-direction: column;
+  }
+
+  .calendar, #notes-section {
+      flex: 1 1 100%;
+      height: auto; /* Allow height to adjust based on content */
   }
 }
