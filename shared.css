@@ -247,6 +247,30 @@ footer {
     height: 50vh;
     overflow-y: auto;
 }
+
+/* styles.css or shared.css */
+
+#reminders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#reminders-table th, #reminders-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#reminders-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+#reminders-table tr:hover {
+    background-color: #f1f1f1;
+}
+
 @media screen and (max-width: 768px) {
     #add-reminder-modal .modal-content {
         width: 90%;

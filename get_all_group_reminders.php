@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "reminder_app";
+$dbname = "remindify"; // Corrected database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -19,8 +19,11 @@ if (isset($_POST['group_id'])) {
     $group_id = intval($_POST['group_id']);
     
     // Fetch reminders for the specific group
-    $query = "SELECT * FROM group_reminders WHERE group_id = ?";
-    $stmt = $conn->prepare($query);
+    $stmt = $conn->prepare("SELECT * FROM group_reminders WHERE group_id = ?");
+    if ($stmt === false) {
+        echo json_encode(["error" => "Prepare failed: " . $conn->error]);
+        exit();
+    }
     $stmt->bind_param('i', $group_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -35,13 +38,11 @@ if (isset($_POST['group_id'])) {
     } else {
         echo json_encode($reminders);
     }
+
+    $stmt->close();
 } else {
     echo json_encode(['error' => 'Group ID not provided']);
 }
 
-console.log('Fetching reminders for group ID:', groupId);
-
-
-$stmt->close();
 $conn->close();
 ?>

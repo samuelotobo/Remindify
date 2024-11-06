@@ -149,9 +149,9 @@ if ($result->num_rows > 0) {
         <div class="month-list"></div>
     </div>
 
-    <div class="main-content"> <!-- New div for layout -->
-        <section id="notes-section">
-            <h2>Week <span id="week-number">n</span></h2> <!-- Centered heading -->
+    <div class="main-content">
+        <!-- <section id="notes-section">
+            <h2>Week <span id="week-number">n</span></h2> 
             <div id="weekly-notes">
                 <form id="notes-form">
                     <div class="note-day">
@@ -186,7 +186,7 @@ if ($result->num_rows > 0) {
                     <button type="submit">Save Notes</button>
                 </form>
             </div>
-        </section>
+        </section> -->
     </div> <!-- End of main-content -->
 </main>
 

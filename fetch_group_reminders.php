@@ -1,24 +1,33 @@
 <?php
+header('Content-Type: application/json');
+
 // Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "remindify";
+$dbname = "remindify"; // Ensure consistent database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo json_encode(["error" => "Connection failed: " . $conn->connect_error]);
+    exit();
 }
 
-// Check if the group-id is set in the GET request
-if (isset($_GET['group-id'])) {
-    $group_id = $_GET['group-id'];
+// Check if the group_id is set in the GET request
+if (isset($_GET['group_id'])) {
+    $group_id = intval($_GET['group_id']);
 
-    // Fetch group reminders based on group-id
-    $sql = "SELECT * FROM group_reminders WHERE group_id = '$group_id'";
-    $result = $conn->query($sql);
+    // Prepare and execute the query
+    $stmt = $conn->prepare("SELECT * FROM group_reminders WHERE group_id = ?");
+    if ($stmt === false) {
+        echo json_encode(["error" => "Prepare failed: " . $conn->error]);
+        exit();
+    }
+    $stmt->bind_param("i", $group_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     $reminders = array();
     if ($result->num_rows > 0) {
@@ -29,8 +38,10 @@ if (isset($_GET['group-id'])) {
 
     // Output the reminders in JSON format
     echo json_encode($reminders);
+
+    $stmt->close();
 } else {
-    echo json_encode(array("error" => "No group-id provided"));
+    echo json_encode(["error" => "No group_id provided"]);
 }
 
 $conn->close();
