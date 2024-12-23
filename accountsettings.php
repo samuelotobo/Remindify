@@ -1,9 +1,6 @@
-<?php 
+<?php
 include 'auth.php';
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "remindify";
+include 'db_connect.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -36,10 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "<script>alert('Error: " . $sql . "\\n" . $conn->error . "');</script>";
         }
-        } else {
-            echo "<script>alert('Please upload a valid image.');</script>";
-        }
-        
+    } else {
+        echo "<script>alert('Please upload a valid image.');</script>";
+    }
+
 }
 
 // Fetch user data for display
@@ -61,15 +58,16 @@ if ($result->num_rows > 0) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Settings │ Remindify</title>
     <link rel="shortcut icon" type="x-icon" href="logo.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
-    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         <aside>
@@ -78,13 +76,13 @@ if ($result->num_rows > 0) {
                     <img src="logo.png" alt="Remindify Logo">
                     <h2><span class="primary">Remind</span><span class="danger">Ify</span></h2>
                 </div>
-                <div class="close" id="close-btn">        
+                <div class="close" id="close-btn">
                     <span class="material-icons-sharp">close</span>
                 </div>
             </div>
 
             <div class="sidebar">
-                <a href="dashboard.php" >
+                <a href="dashboard.php">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -94,7 +92,7 @@ if ($result->num_rows > 0) {
                     <!-- <span class="today-count">3</span> -->
                 </a>
                 <a href="shared.php">
-                <span class="material-icons-sharp">schedule_send</span>
+                    <span class="material-icons-sharp">schedule_send</span>
                     <h3>Shared Calendar</h3>
                 </a>
                 <a href="calendar.php">
@@ -123,11 +121,11 @@ if ($result->num_rows > 0) {
                         <h3>Account Settings</h3>
                     </a>
                     <form action="logout.php" method="post" style="display: inline;">
-    <button type="submit" class="red">
-        <span class="material-icons-sharp">logout</span>
-        <h3>Log Out</h3>
-    </button>
-</form>
+                        <button type="submit" class="red">
+                            <span class="material-icons-sharp">logout</span>
+                            <h3>Log Out</h3>
+                        </button>
+                    </form>
 
                 </div>
             </div>
@@ -146,12 +144,14 @@ if ($result->num_rows > 0) {
                     <!-- Profile Picture Upload -->
                     <div class="input-group">
                         <label for="profile-picture">Upload Profile Picture</label>
-                        <input type="file" id="profile-picture" name="profile-picture" accept="image/*" onchange="previewImage(event)">
-                        
+                        <input type="file" id="profile-picture" name="profile-picture" accept="image/*"
+                            onchange="previewImage(event)">
+
                         <!-- Preview of the uploaded image -->
                         <div class="image-preview" id="image-preview">
                             <?php if (!empty($imageData)): ?>
-                                <img src="<?php echo $imageSrc; ?>" alt="Profile Picture Preview" id="profile-picture-preview">
+                                <img src="<?php echo $imageSrc; ?>" alt="Profile Picture Preview"
+                                    id="profile-picture-preview">
                             <?php else: ?>
                                 <img src="" alt="Profile Picture Preview" id="profile-picture-preview">
                                 <span class="image-preview-text">No image selected</span>
@@ -162,13 +162,15 @@ if ($result->num_rows > 0) {
                     <!-- Username -->
                     <div class="input-group">
                         <label for="username">Change Username</label>
-                        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" placeholder="Enter new username">
+                        <input type="text" id="username" name="username"
+                            value="<?php echo htmlspecialchars($row['username']); ?>" placeholder="Enter new username">
                     </div>
 
                     <!-- Email -->
                     <div class="input-group">
                         <label for="email">Change Email</label>
-                        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" placeholder="Enter new email">
+                        <input type="email" id="email" name="email"
+                            value="<?php echo htmlspecialchars($row['email']); ?>" placeholder="Enter new email">
                     </div>
 
                     <!-- Password -->
@@ -209,44 +211,45 @@ if ($result->num_rows > 0) {
     <script src="dashboard.js"></script>
     <script>
         // account settings
-document.getElementById('profile-picture').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const previewContainer = document.getElementById('image-preview');
-    const previewImage = document.getElementById('profile-picture-preview');
-    const previewText = previewContainer.querySelector('.image-preview-text');
+        document.getElementById('profile-picture').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('image-preview');
+            const previewImage = document.getElementById('profile-picture-preview');
+            const previewText = previewContainer.querySelector('.image-preview-text');
 
-    if (file) {
-        const reader = new FileReader();
+            if (file) {
+                const reader = new FileReader();
 
-        previewText.style.display = "none"; // Hide the preview text
-        previewImage.style.display = "block"; // Show the image
+                previewText.style.display = "none"; // Hide the preview text
+                previewImage.style.display = "block"; // Show the image
 
-        reader.addEventListener('load', function() {
-            previewImage.setAttribute('src', reader.result);
+                reader.addEventListener('load', function () {
+                    previewImage.setAttribute('src', reader.result);
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                previewText.style.display = null;
+                previewImage.style.display = null;
+                previewImage.setAttribute('src', '');
+            }
         });
 
-        reader.readAsDataURL(file);
-    } else {
-        previewText.style.display = null;
-        previewImage.style.display = null;
-        previewImage.setAttribute('src', '');
-    }
-});
 
-
-   // Preview image before upload
-   function previewImage(event) {
+        // Preview image before upload
+        function previewImage(event) {
             var reader = new FileReader();
-            reader.onload = function() {
+            reader.onload = function () {
                 var output = document.getElementById('profile-picture-preview');
                 output.src = reader.result;
                 output.style.display = 'block';
             };
             reader.readAsDataURL(event.target.files[0]);
-            
+
             // Hide the "No image selected" text
             document.querySelector('.image-preview-text').style.display = 'none';
         }
     </script>
 </body>
+
 </html>

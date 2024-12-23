@@ -2,11 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "remindify"; // Corrected database name
+include 'db_connect.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

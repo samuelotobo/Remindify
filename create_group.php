@@ -16,11 +16,7 @@ if (empty($group_name)) {
     exit();
 }
 
-// Database connection
-$servername = "localhost";
-$username = "root"; // Your MySQL username
-$password = ""; // Your MySQL password
-$dbname = "remindify";
+include 'db_connect.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

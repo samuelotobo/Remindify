@@ -1,9 +1,6 @@
 <?php
 include 'auth.php';
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "remindify"; // Ensure consistent database name
+include 'db_connect.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

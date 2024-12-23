@@ -1,10 +1,5 @@
 <?php
-
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "reminder_app";
+include 'db_connect.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

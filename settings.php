@@ -1,8 +1,5 @@
-<?php include 'auth.php'; 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "reminder_app";
+<?php include 'auth.php';
+include 'db_connect.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -34,15 +31,16 @@ if ($result->num_rows > 0) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings │ Remindify</title>
     <link rel="shortcut icon" type="x-icon" href="logo.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
-    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         <aside>
@@ -51,13 +49,13 @@ if ($result->num_rows > 0) {
                     <img src="logo.png" alt="Remindify Logo">
                     <h2><span class="primary">Remind</span><span class="danger">Ify</span></h2>
                 </div>
-                <div class="close" id="close-btn">        
+                <div class="close" id="close-btn">
                     <span class="material-icons-sharp">close</span>
                 </div>
             </div>
 
             <div class="sidebar">
-                <a href="dashboard.php" >
+                <a href="dashboard.php">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -122,9 +120,10 @@ if ($result->num_rows > 0) {
                     </div>
                 </div>
             </div>
-                <!-- === end of top === -->
+            <!-- === end of top === -->
         </div>
     </div>
     <script src="./index.js"></script>
 </body>
+
 </html>
